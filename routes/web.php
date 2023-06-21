@@ -14,10 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
-Route::get('/login', 'App\Http\Controllers\SigninController@showLogin')->name('login');
-Route::post('/login', 'App\Http\Controllers\SigninController@login');
+Route::get('/signin', 'App\Http\Controllers\SigninController@showLogin')->name('login');
+Route::post('/signin', 'App\Http\Controllers\SigninController@login');
+Route::get('/signup', 'App\Http\Controllers\SignupController@index')->name('register');
+Route::post('/signup', 'App\Http\Controllers\SignupController@register');
+Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
+Route::get('/logout', 'App\Http\Controllers\DashboardController@logout');
+
+
 //AI
 Route::get('/ai-ask', 'App\Http\Controllers\ChatGptController@index')->name('ai.index');
 Route::post('/ai-ask', 'App\Http\Controllers\ChatGptController@textCompletion')->name('ai.ask');
