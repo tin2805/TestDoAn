@@ -1,0 +1,78 @@
+.tab__menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 0 14px;
+  margin-bottom: 24px;
+  .name {
+    font-weight: bold;
+    width: 100%;
+    font-size: 1.1rem;
+    width: 50%;
+    padding: 10px 0;
+    @include media(l) {
+      width: 22%;
+      padding: 18px 0;
+    }
+  }
+  ul {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    align-items: center;
+    @include media(l) {
+      margin-bottom: 0;
+      width: 56%;
+      justify-content: flex-start;
+    }
+    li {
+      box-sizing: border-box;
+      margin-right: 12px;
+      @include media(m) {
+        margin-right: 30px;
+      }
+      a {
+        display: block;
+        padding: 12px 4px;
+        color: #838383;
+        font-size: .9rem;
+        box-sizing: border-box;
+        transition: .3s ease;
+        @include media(l) {
+          padding: 20px 4px;
+        }
+        &.active {
+          color: $orange;
+          border-bottom: 2px solid $orange;
+        }
+      }
+    }
+  }
+  .linkbox {
+    text-align: center;
+    margin: 10px 0 16px auto;
+    @include media(l) {
+      width: 22%;
+      margin: 0 0 0 auto;
+    }
+    a {
+      color: $orange;
+      border: 1px solid $orange;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      padding: 6px 20px;
+      line-height: 1.2;
+      transition: all 200ms ease;
+      &:hover {
+        color: #fff;
+        background-color: $orangeHover;
+        border: 1px solid $orangeHover;
+      }
+    }
+  }
+}

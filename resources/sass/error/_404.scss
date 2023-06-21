@@ -1,0 +1,50 @@
+#error.e404 {
+  margin-bottom: 40px;
+  .in_e404 {
+    padding-top: 40px;
+    margin: auto;
+    @include max-width(l);
+    width: calc(100% - 8px);
+    &__title {
+      margin-bottom: 40px;
+      p {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+    }
+    &__sec1 {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      &--textbox {
+        width: 100%;
+        @include media(m) {
+          width: 80%;
+        }
+        .mes {
+          margin-bottom: 30px;
+          p {
+            font-size: 1.3rem;
+            line-height: 1.5;
+          }
+          &4 {
+            p {
+              font-size: 1.4rem;
+            }
+          }
+        }
+      }
+      &--imgbox {
+        width: 50%;
+        @include media(m) {
+          width:20%;
+        }
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

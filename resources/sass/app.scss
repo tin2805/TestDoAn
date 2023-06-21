@@ -1,0 +1,77 @@
+// 共通
+@import "common/normalize";
+@import "common/reset";
+@import "common/color";
+@import "common/font";
+@import "common/default";
+
+//ミックスイン
+@import "mixin/z"; //z-index
+@import "mixin/media"; //メディアクエリ
+@import "mixin/form";
+@import "mixin/mark";
+@import "mixin/margin_padding";
+
+//会員ページ用ブロック
+@import "block/home/header";
+@import "block/home/sidebar";
+@import "block/home/fotter";
+@import "block/home/content";
+@import "block/home/material_list";
+@import "block/home/menu";
+@import "block/home/table";
+@import "block/home/other";
+@import "block/home/commentary";
+@import "block/home/info";
+@import "block/home/paginate";
+
+@import "block/home/agent/sidebar";
+
+//会員ページ
+@import "page/home/signup";
+@import "page/home/signin";
+@import "page/home/repass";
+@import "page/home/dash"; //ダッシュボード
+@import "page/home/movie";
+@import "page/home/movie_detail";
+@import "page/home/document";
+@import "page/home/document_detail";
+@import "page/home/consultation";
+@import "page/home/consultation_online_detail";
+@import "page/home/consultation_chat_regist";
+@import "page/home/consultation_chat_done";
+@import "page/home/consultation_chat_detail";
+@import "page/home/consultation_booking";
+@import "page/home/diagnose";
+@import "page/home/setting";
+@import "page/home/setting_mail";
+@import "page/home/demand";
+@import "page/home/_new_businesse";
+@import "page/home/special_edition";
+@import "page/home/home_store";
+
+// 見積もり代行
+@import "page/home/estimate";
+
+//エージェントページ
+@import "page/agent/dash";
+@import "page/agent/customer_manage";
+@import "page/agent/customer_manage_detail";
+@import "page/agent/sales_manage";
+@import "page/agent/sales_manage_exchange";
+
+@import "error/error";
+@import "error/404";
+
+//会員ページ用ブロック
+@import "block/top/header";
+
+//トップページ用
+@import "page/top/index";
+
+@import "utility/lity";
+@import "utility/media";
+@import "utility/font";
+
+//JSaaSストア
+@import "page/store/main";

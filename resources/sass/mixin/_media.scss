@@ -1,0 +1,61 @@
+$breakpoints: (
+    s: "only screen and (min-width: 480px)",
+    sr: "only screen and (min-width: 600px)",
+    m: "only screen and (min-width: 769px)",
+    //ipadより大きい
+    xm: "only screen and (min-width: 960px)",
+    l: "only screen and (min-width: 1024px)",
+    xl: "only screen and (min-width: 1060px)",
+);
+
+@mixin media($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media #{map-get($breakpoints, $breakpoint)} {
+            @content;
+        }
+    } @else {
+        @error "$breakpoints に #{$breakpoint} ってキーは無いよ！";
+    }
+}
+
+$max-width: (
+    s: "480px",
+    ms: "600px",
+    m: "768px",
+    xm: "960px",
+    l: "1024px",
+    xl: "1060px",
+);
+
+@mixin max-width($val) {
+    @if map-has-key($max-width, $val) {
+        max-width: #{map-get($max-width, $val)};
+    } @else {
+        @error "$max-width に #{$val} ってキーは無いよ！";
+    }
+}
+
+$min-width: (
+    xs: "280px",
+    s: "480px",
+    m: "768px",
+    xm: "960px",
+    l: "1024px",
+);
+
+@mixin min-width($val) {
+    @if map-has-key($min-width, $val) {
+        min-width: #{map-get($min-width, $val)};
+    } @else {
+        @error "$min-width に #{$val} ってキーは無いよ！";
+    }
+}
+
+//width: 100%; ~ width: 0%;の作成
+$width: 100;
+@while $width > 0 {
+    .width#{$width} {
+        width: #{$width} + #{"%"} !important;
+    }
+    $width: $width - 1;
+}

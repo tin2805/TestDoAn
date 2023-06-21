@@ -1,0 +1,22 @@
+#consultation_chat_done.content {
+  .inContent {
+    width: 98%;
+    @include max-width(m);
+    .sec1 {
+      &__message {
+        background: #fff;
+        padding: 20px 0;
+        margin-bottom: 50px;
+        p {
+          text-align: center;
+          font-size: 1.2rem;
+        }
+      }
+      &__link {
+        text-align: center;
+        a {
+        }
+      }
+    }
+  }
+}

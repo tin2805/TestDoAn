@@ -1,0 +1,16 @@
+$z_arr: (
+    closeBtn: 1250,
+    modal: 999,
+    menu_btn: 300,
+    drawer: 250,
+    header: 100,
+    sidebar: 75,
+    overlay: 50,
+    overlay_modal: 125,
+    up: 5, //デフォルトより上層にしたい用
+    default: 1,
+);
+
+@mixin z($key) {
+    z-index: map-get($z_arr, $key);
+}

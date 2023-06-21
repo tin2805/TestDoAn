@@ -1,0 +1,39 @@
+$margin: 300;
+@while $margin >= 0{
+  .margin#{$margin}px{
+    margin:#{$margin} + #{'px'} !important;
+  }
+  $margin : $margin - 1;
+}
+
+$margin_top : 30;
+@while $margin_top >= 0{
+  .margin_top#{$margin_top * 10}rem{
+    margin-top:#{$margin_top} + #{'rem'} !important;
+  }
+  $margin_top : $margin_top - 0.1;
+}
+
+$margin_btm : 300;
+@while $margin_btm >= 0{
+  .margin_btm#{$margin_btm}px{
+    margin-bottom:#{$margin_btm} + #{'px'} !important;
+  }
+  $margin_btm : $margin_btm - 1;
+}
+
+$margin_btm : 30;
+@while $margin_btm >= 0{
+  .margin_btm#{$margin_btm * 10}rem{
+    margin-bottom:#{$margin_btm} + #{'rem'} !important;
+  }
+  $margin_btm : $margin_btm - 0.1;
+}
+
+$margin_right: 300;
+@while $margin_right >= 0{
+  .margin_right#{$margin_right}px{
+    margin-right:#{$margin_right} + #{'px'} !important;
+  }
+  $margin_right : $margin_right - 1;
+}

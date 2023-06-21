@@ -1,0 +1,40 @@
+.commentary {
+  margin-bottom: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  &__textbox {
+    margin-right: auto;
+    width: 100%;
+    @include media(s) {
+      width: 90%;
+    }
+    &--title {
+      margin-bottom: 8px;
+      h1 {
+        font-size: 1.7rem;
+        font-weight: 600;
+        i {
+          color: #5c5c5c;
+          margin-right: 8px;
+          font-size: 2rem;
+        }
+      }
+    }
+    &--text {
+      p {
+      }
+    }
+  }
+  &__imgbox {
+    width: 20%;
+    margin: auto;
+    @include media(s) {
+      width: 8%;
+    }
+    img {
+      width: 100%;
+    }
+  }
+}

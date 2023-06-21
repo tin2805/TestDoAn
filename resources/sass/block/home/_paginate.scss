@@ -1,0 +1,25 @@
+.paginate {
+  margin: 30px 0;
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    li {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      margin: 4px 0;
+      &.active {
+        background: $agent_color;
+        a,
+        span {
+          color: #fff;
+        }
+      }
+      a,
+      span {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

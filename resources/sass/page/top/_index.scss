@@ -1,0 +1,205 @@
+.top-kv {
+  background: $main_color;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 124px 0;
+  &__leftbox {
+    width: 100%;
+    margin: 0 auto 50px auto;
+    @include media(m) {
+      width: 36%;
+      margin: 0 0 0 auto;
+    }
+    &--text {
+      text-align: center;
+      @include media(m) {
+        text-align: left;
+        padding-left: 30px;
+      }
+      h2 {
+        color: #fff;
+        font-size: 2.2rem;
+        margin-bottom: 44px;
+        @include media(s) {
+          font-size: 4vw;
+        }
+      }
+      p {
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: bold;
+        line-height: 1.6;
+        margin-bottom: 44px;
+        @include media(s) {
+          font-size: 3vw;
+        }
+      }
+    }
+    &--link {
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        padding-right: 0;
+        width: 50%;
+        margin: auto;
+        max-width: 260px;
+        @include media(m) {
+          margin: 0;
+          max-width: 100%;
+          width: 100%;
+          padding-right: 25px;
+          justify-content: flex-start;
+        }
+        li {
+          width: calc(100% / 2 - 16px);
+          margin: 0 0 10px 0;
+          @include media(m) {
+            max-width: 100px;
+            margin: 0 16px 0 0;
+            width: calc(100% / 4 - 16px);
+          }
+          a {
+            display: block;
+            border: 1px solid #fff;
+            border-radius: 8px;
+            padding: 4px 0;
+            img {
+              display: block;
+              width: 60%;
+              margin: auto;
+            }
+            span {
+              display: block;
+              color: #fff;
+              text-align: center;
+              font-size: 0.6rem;
+              padding: 8px 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  &__rightbox {
+    width: 80%;
+    margin: auto;
+    @include media(m) {
+      width: 45%;
+      margin: 0 auto 0 0;
+    }
+    &--img {
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.top-content {
+  background: #fff;
+  margin: 0 auto 200px auto;
+  border-radius: 12px;
+  position: relative;
+  top: -74px;
+  @include max-width(xm);
+  .top-inContent {
+    width: 90%;
+    margin: auto;
+    padding: 40px 0;
+    &__ttl {
+      margin-bottom: 40px;
+      h2 {
+        color: $main_color;
+        font-size: 1.4rem;
+        @include media(m) {
+          font-size: 2.4rem;
+        }
+      }
+    }
+    &__sec {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      flex-flow: column-reverse;
+      align-items: center;
+      margin-bottom: 100px;
+      @include media(m) {
+        flex-flow: inherit;
+      }
+      &.sec__var02 {
+        flex-flow: column;
+        @include media(m) {
+          flex-flow: inherit;
+        }
+        .top-inContent__sec--text {
+          background: $main_color;
+          h3,
+          h4,
+          p {
+            color: #fff;
+          }
+        }
+      }
+      &--img {
+        width: 100%;
+        box-shadow: 0px 3px 6px #00000029;
+        @include media(m) {
+          box-shadow: none;
+          width: 48%;
+        }
+        img {
+          width: 100%;
+        }
+      }
+      &--text {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 34px 34px 80px 34px;
+        box-shadow: 0px 3px 6px #00000029;
+        margin-bottom: 14px;
+        font-family: "ShinGoPro";
+        @include media(m) {
+          width: 48%;
+        }
+        h3 {
+          color: $main_color;
+          font-size: 1.5rem;
+          margin-bottom: 30px;
+          @include media(m) {
+            font-size: 4.4vw;
+          }
+        }
+        h4 {
+          color: $main_color;
+          font-size: 1.3rem;
+          margin-bottom: 30px;
+          @include media(m) {
+            font-size: 2.6vw;
+          }
+        }
+        p {
+          font-size: 1rem;
+          font-weight: bold;
+          line-height: 1.8;
+          @include media(m) {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.top-footer {
+  background: #8e8e8e;
+  padding: 12px 0;
+  p {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #fff;
+  }
+}

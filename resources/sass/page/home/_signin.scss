@@ -1,0 +1,164 @@
+#signin.content {
+    margin: 0;
+    .inContent {
+        width: 100%;
+        margin: 0 auto 0 auto;
+        padding: 30px 0 0 0;
+        position: relative;
+        background: linear-gradient(
+            180deg,
+            $main_color 0%,
+            $main_color 50%,
+            #fcfcfc 50%,
+            #fcfcfc 100%
+        );
+        min-height: 100vh;
+        .flash_message {
+            width: 100%;
+            max-width: 960px;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            color: #fff;
+            background: rgba(253, 107, 0, 0.9);
+            z-index: 999;
+            text-align: center;
+            padding: 20px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            animation: slideIn 0.6s ease-out forwards;
+            &.el_done {
+                animation: slideOut 0.6s ease-out forwards;
+            }
+        }
+        &.inContent_agent {
+            background: linear-gradient(
+                180deg,
+                $agent_color 0%,
+                $agent_color 50%,
+                #fcfcfc 50%,
+                #fcfcfc 100%
+            );
+        }
+        .sec2 {
+            &__inContent {
+                &--topic {
+                    margin: 0 auto 30px auto;
+                    padding: 0 18px;
+                    box-sizing: border-box;
+                    max-width: 720px;
+                    &_title {
+                        color: #fff;
+                        font-size: 1.1rem;
+                        line-height: 1.8;
+                        @include media(m) {
+                            font-size: 1.2rem;
+                        }
+                        @include media(l) {
+                            font-size: 1.3rem;
+                        }
+                    }
+                    &_text {
+                        padding-left: 16px;
+                        box-sizing: border-box;
+                        li {
+                            color: #fff;
+                            line-height: 1.8;
+                            font-size: 1rem;
+                            margin-bottom: 2px;
+                            display: flex;
+                            flex-wrap: nowrap;
+                            justify-content: flex-start;
+                            align-items: flex-start;
+                            text-indent: -1rem;
+                            @include media(l) {
+                                font-size: 1.05rem;
+                            }
+                            span {
+                                display: block;
+                            }
+                            p {
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .sec1 {
+            @include max-width(s);
+            width: 96%;
+            margin: auto;
+            margin-bottom: 60px;
+            &In {
+                padding: 50px 8px 10px 8px;
+                background: #fff;
+                box-shadow: 0px 1px 3px #00000029;
+                border-radius: 15px;
+                &--ttl {
+                    h1 {
+                        text-align: center;
+                        color: $main_color;
+                        margin-bottom: 30px;
+                        a {
+                            display: inline-block;
+                            img {
+                                width: auto;
+                                height: 40px;
+                            }
+                        }
+                    }
+                    p.text {
+                        font-size: 1rem;
+                        text-align: center;
+                        margin-bottom: 40px;
+                    }
+                }
+                &--msg {
+                    width: 90%;
+                    margin: 14px auto;
+                    p {
+                        font-size: 0.75rem;
+                        line-height: 1.5;
+                    }
+                }
+                form {
+                    .submit_box {
+                        max-width: 200px;
+                        width: 80%;
+                        margin: 0 auto 30px auto;
+                        display: block;
+                        input {
+                            display: block;
+                            width: 100% !important;
+                            margin-left: 0 !important;
+                            border-radius: 20px;
+                            padding: 14px 0;
+                            font-size: 1rem;
+                        }
+                    }
+                }
+                .linkbox {
+                    text-align: center;
+                    padding: 4px;
+                    margin: 12px 0;
+                    a {
+                        border: 0;
+                        font-size: 1rem;
+                        text-decoration: underline;
+                        @include media(s) {
+                            font-size: 1.1rem;
+                        }
+                    }
+                }
+            }
+            hr {
+                width: 100%;
+                background: #f7f7f7;
+                height: 2px;
+            }
+        }
+    }
+
+}

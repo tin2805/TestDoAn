@@ -1,0 +1,45 @@
+// @font-face {
+//   font-family: 'YuGothic-Bold';
+//   src: url('../font/YuGothic-Bold.otf');
+// }
+// @font-face {
+//   font-family: 'YuGothic-Medium';
+//   src: url('../font/YuGothic-Medium.otf');
+// }
+
+html {
+  font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", YuGothic, "Yu Gothic", sans-serif;
+}
+
+@mixin font_pt {
+  font-family: "PT Sans Narrow", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", sans-serif;
+}
+
+@mixin font_andale {
+  font-family: "Andale Mono", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", sans-serif;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+//.font-size〇〇 の作成
+$font-size : 3;
+@while $font-size > 0{
+  .font-size#{$font-size * 10}{
+    font-size:#{$font-size} + #{'rem'} !important;
+  }
+  $font-size : $font-size - 0.1;
+}
