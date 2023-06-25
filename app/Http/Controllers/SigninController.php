@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Employee;
 
 class SigninController extends Controller
 {
@@ -14,20 +15,20 @@ class SigninController extends Controller
     }
     public function login(Request $request) {
         $post_data = $request->all();
-        $customer = User::where('email', $post_data['email'])->first();
+        $customer = Employee::where('email', $post_data['email'])->first();
         if (@$customer->id) {
             if (Hash::check($post_data['password'], $customer->password)) {
 
                 Auth::loginUsingId($customer->id);
 
-                $this->redirectTo = "/chatify";
+                $this->redirectTo = "/dashboard";
 
-                return redirect($redirectTo ?? "/chatify");
+                return redirect($redirectTo ?? "/dashboard");
             } else {
                 return redirect('/signin/error/non_auth');
             }
         } else {
-            return redirect('/signin/error/non_auth');
+            return redirect()->back();
         }
     }
 }

@@ -10,7 +10,10 @@ class DashboardController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/dashboard';
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     protected function guard()
     {
