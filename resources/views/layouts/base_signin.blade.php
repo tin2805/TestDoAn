@@ -43,10 +43,6 @@
   @yield('header')
   @yield('content')
 
-  <footer class="top-footer">
-    <p>Copyright &copy; 2021-2022 JSaaS. All Rights Reserved.</p>
-  </footer>
-
   <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
