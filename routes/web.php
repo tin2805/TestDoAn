@@ -23,6 +23,9 @@ Route::post('/signup', 'App\Http\Controllers\SignupController@register');
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
 Route::get('/logout', 'App\Http\Controllers\DashboardController@logout');
 
+//CheckInOut
+Route::get('/checkin', 'App\Http\Controllers\DashboardController@checkIn');
+Route::get('/checkout', 'App\Http\Controllers\DashboardController@checkOut');
 
 //AI
 Route::get('/ai-ask', 'App\Http\Controllers\ChatGptController@index')->name('ai.index');
