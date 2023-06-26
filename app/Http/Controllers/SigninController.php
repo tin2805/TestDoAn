@@ -25,7 +25,7 @@ class SigninController extends Controller
 
                 return redirect($redirectTo ?? "/dashboard");
             } else {
-                return redirect('/signin/error/non_auth');
+                return redirect()->back();
             }
         } else {
             return redirect()->back();
