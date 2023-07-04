@@ -21,6 +21,9 @@ class ApiController extends Controller
                 return $user;
             }
         }
+        else {
+            return false;
+        }
     }
     public function checkin() {
         $ip_company = $this->setting('site.ip_company');
