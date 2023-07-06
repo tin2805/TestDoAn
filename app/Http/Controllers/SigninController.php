@@ -10,6 +10,11 @@ use App\Models\Employee;
 
 class SigninController extends Controller
 {
+    protected function guard()
+    {
+        return Auth::guard('employee');
+    }
+
     public function showLogin() {
         return view('signin');
     }

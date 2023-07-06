@@ -30,3 +30,13 @@ Route::get('/checkout', 'App\Http\Controllers\DashboardController@checkOut');
 //AI
 Route::get('/ai-ask', 'App\Http\Controllers\ChatGptController@index')->name('ai.index');
 Route::post('/ai-ask', 'App\Http\Controllers\ChatGptController@textCompletion')->name('ai.ask');
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
+
+
+//admin
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});

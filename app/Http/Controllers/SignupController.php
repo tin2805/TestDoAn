@@ -21,7 +21,7 @@ class SignupController extends Controller
         $post_data = $request->all();
         $post_data = $this->validation($post_data)->validate();
         if($post_data['password'] == $post_data['confirm_password']) {
-            $post_data['password'] = Hash::make($post_data['password']);
+            $post_data['password'] = $post_data['password'];
             $user = Employee::create($post_data);
             Auth::loginUsingId($user->id);
         }
