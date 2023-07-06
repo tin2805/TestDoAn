@@ -16,10 +16,10 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    protected function guard()
-    {
-        return Auth::guard();
-    }
+    // protected function guard()
+    // {
+    //     return Auth::guard();
+    // }
 
     public function index() {
         return view('welcome');
@@ -86,14 +86,5 @@ class DashboardController extends Controller
             return redirect()->back()->with('error_message', 'Wrong Ip Company');
         }
 
-    }
-
-
-    //
-    public function setting($key) {
-
-        $setting = \DB::table('settings')->where('key', $key)->first();
-
-        return $setting->value;
     }
 }
