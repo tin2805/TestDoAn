@@ -30,7 +30,7 @@ class MailNotify extends Mailable
     */
    public function build()
    {
-       return $this->from('linhthuan2805@gmail.com')
+       return $this->from('admin@admin.com')
                     ->view('mails.mail-notify')
                     ->subject('Xác thực tài khoản');
    }
