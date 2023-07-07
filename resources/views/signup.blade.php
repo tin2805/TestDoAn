@@ -1,86 +1,70 @@
-@extends('layouts.base_signin')
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Login 10</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-@section('head')
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
-@endsection
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-@section('content')
-  <main id="signin" class="content">
-    <div class="inContent">
-      @if (session('flash_message'))
-        <div class="flash_message">
-            {{ session("flash_message") }}
-        </div>
-      @endif
-    <div class="sec1">
-      <div class="sec1In">
-        <div class="sec1In--form">
-          <form action="{{ url('/signup')}}" method="POST">
+	</head>
+	<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Login #10</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+		      	<h3 class="mb-4 text-center">Have an account?</h3>
+		      	<form action="#" class="signin-form">
+		      		<div class="form-group">
+		      			<input type="text" class="form-control" placeholder="Username" required>
+		      		</div>
+	            <div class="form-group">
+	              <input id="password-field" type="password" class="form-control" placeholder="Password" required>
+	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	            </div>
+	            <div class="form-group">
+	            	<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+	            </div>
+	            <div class="form-group d-md-flex">
+	            	<div class="w-50">
+		            	<label class="checkbox-wrap checkbox-primary">Remember Me
+									  <input type="checkbox" checked>
+									  <span class="checkmark"></span>
+									</label>
+								</div>
+								<div class="w-50 text-md-right">
+									<a href="#" style="color: #fff">Forgot Password</a>
+								</div>
+	            </div>
+	          </form>
+	          <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
+	          <div class="social d-flex text-center">
+	          	<a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
+	          	<a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span> Twitter</a>
+	          </div>
+		      </div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-              @csrf
-              <div class="input_box">
-                <label for="fullname">Full Name</label>
-                <input type="text" name="fullname" id="fullname" placeholder="Full Name" value="{{old('fullname')}}">
-                @error('fullname')
-                <span>{{$message}}</span>
-                @enderror
-              </div>
-              <div class="input_box">
-                <label for="user_name">User Name</label>
-                <input type="text" name="user_name" id="user_name" placeholder="User Name" value="{{old('user_name')}}">
-                @error('user_name')
-                <span>{{$message}}</span>
-                @enderror
-              </div>
-              <div class="input_box">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Email" value="{{old('email')}}">
-                @error('email')
-                <span>{{$message}}</span>
-                @enderror
-              </div>
-              <div class="input_box">
-                <label for="phone">Phone Number</label>
-                <input type="text" name="phone" id="phone" placeholder="Phone Number" value="{{old('phone')}}">
-                @error('phone')
-                <span>{{$message}}</span>
-                @enderror
-              </div>
-              <div class="input_box">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="Password"value="{{old('password')}}">
-                @error('password')
-                <span>{{$message}}</span>
-                @enderror
-              </div>
-              <div class="input_box">
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password">
-                @error('confirm_password')
-                <span>{{$message}}</span>
-                @enderror
-              </div>
+	<script src="js/jquery.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
 
-              <div class="submit_box">
-                <input type="submit" value="Signup">
-              </div>
-            </form>
+	</body>
+</html>
 
-            <div class="linkbox">
-              <a href="{{ url('/signup') }}">Signup</a>
-            </div>
-
-            <hr>
-
-            <div class="linkbox">
-              <a href="{{ url('/signin/repass') }}">Forgot Password</a>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </main>
-
-@endsection

@@ -26,7 +26,8 @@ class ApiController extends Controller
         }
     }
     public function checkin() {
-        $ip_company = $this->setting('site.ip_company');
+        dd(setting('site.ip_company'));
+        $ip_company = setting('site.ip_company');
         $ip_company = explode(',',$ip_company);
         $client_ip = request()->ip();
         $checkin = CheckInOut::where('employee_id', 2)->whereBetween('created_at', [date("Y-m-d H:i:s", strtotime("midnight", time())), date("Y-m-d H:i:s", strtotime("tomorrow", time()) - 1)])->first();
@@ -60,7 +61,7 @@ class ApiController extends Controller
     }
 
     public function checkout() {
-        $ip_company = $this->setting('site.ip_company');
+        $ip_company = setting('site.ip_company');
         $ip_company = explode(',',$ip_company);
         $client_ip = request()->ip();
         if(in_array($client_ip, $ip_company)){
@@ -79,13 +80,5 @@ class ApiController extends Controller
             return redirect()->back()->with('error_message', 'Wrong Ip Company');
         }
 
-    }
-
-    //
-    public function setting($key) {
-
-        $setting = \DB::table('settings')->where('key', $key)->first();
-
-        return $setting->value;
     }
 }

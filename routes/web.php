@@ -20,6 +20,10 @@ Route::get('/signin', 'App\Http\Controllers\SigninController@showLogin')->name('
 Route::post('/signin', 'App\Http\Controllers\SigninController@login');
 Route::get('/signup', 'App\Http\Controllers\SignupController@index')->name('register');
 Route::post('/signup', 'App\Http\Controllers\SignupController@register');
+Route::get('/forgot-pass', 'App\Http\Controllers\SigninController@forgotPassView')->name('forgotPassView');
+Route::post('/forgot-pass', 'App\Http\Controllers\SigninController@forgotPass')->name('forgotPass');
+Route::post('/forgot-pass/check-code', 'App\Http\Controllers\SigninController@forgotPassInput')->name('forgotPassInput');
+Route::post('/change-pass', 'App\Http\Controllers\SigninController@changePassword')->name('changePass');
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
 Route::get('/logout', 'App\Http\Controllers\DashboardController@logout');
 

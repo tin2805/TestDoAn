@@ -1,49 +1,31 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
+  <head>
+  	<title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>JSaaSログインページ</title>
-  <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5179987.js"></script>
-  @yield('head')
-   <!-- Google tag (gtag.js) -->
-   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LKZ50MLG8V"></script>
-   <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
-        gtag('config', 'G-LKZ50MLG8V');
-    </script>
-</head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<body>
-@if(isset($page_data->base_color) && !request()->is('*agent*'))
-<style>
-#signin.content .inContent {
-  background:linear-gradient(180deg, {{ $page_data->base_color }} 0%, {{ $page_data->base_color }} 50%, #fcfcfc 50%, #fcfcfc 100%)!important;
-}
-.submit_box input {
-  background:{{ $page_data->base_color }}!important;
-}
-</style>
-@endif
-@if(isset($page_data->logo) && $page_data->logo && !request()->is('*agent*'))
-<style>
-#signin.content .inContent .sec1In--ttl h1 a img {
-  height:100%!important;
-}
-</style>
-@endif
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-  @yield('header')
+	</head>
+	<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">
+
+
+
   @yield('content')
 
-  <script src="{{ asset('js/app.js') }}"></script>
+	<script src="js/jquery.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+  @yield('script')
+
 </body>
 
 </html>

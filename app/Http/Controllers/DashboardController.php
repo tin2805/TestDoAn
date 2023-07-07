@@ -32,7 +32,7 @@ class DashboardController extends Controller
     }
 
     public function checkin() {
-        $ip_company = $this->setting('site.ip_company');
+        $ip_company = setting('site.ip_company');
         $ip_company = explode(',',$ip_company);
         $client_ip = request()->ip();
         $checkin = CheckInOut::where('employee_id', Auth::id())->whereBetween('created_at', [date("Y-m-d H:i:s", strtotime("midnight", time())), date("Y-m-d H:i:s", strtotime("tomorrow", time()) - 1)])->first();
@@ -65,7 +65,7 @@ class DashboardController extends Controller
     }
 
     public function checkout() {
-        $ip_company = $this->setting('site.ip_company');
+        $ip_company = setting('site.ip_company');
         $ip_company = explode(',',$ip_company);
         $client_ip = request()->ip();
         if(in_array($client_ip, $ip_company)){
