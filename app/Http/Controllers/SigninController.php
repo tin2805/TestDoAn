@@ -77,8 +77,11 @@ class SigninController extends Controller
         $employee = Employee::where('email', $request->email)->first();
         if($request->password == $request->re_password){
             $employee->update(['password' => Hash::make($request->password)]);
+            Auth::loginUsingId($employee->id);
 
-            return view('welcome');
+            $this->redirectTo = "/dashboard";
+            
+            return redirect($redirectTo ?? "/dashboard");
         }
         else{
             return view('change_password')->with(compact('employee'))->with('message', 'Wrong Re Password');
