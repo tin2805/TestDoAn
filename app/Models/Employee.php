@@ -26,7 +26,7 @@ class Employee extends \TCG\Voyager\Models\User
         });
     }
 
-    protected $fillable = ['fullname','email','phone','user_name','address', 'password'];
+    protected $fillable = ['fullname','email','phone','user_name','address', 'password', 'code'];
 
 
 }
