@@ -1,70 +1,101 @@
-<!doctype html>
-<html lang="en">
-  <head>
-  	<title>Login 10</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+@extends('layouts.base_signin')
+@section('page-title')
+    {{__('Register')}}
+@endsection
+@php
+  //  $logo=asset(Storage::url('uploads/logo/'));
+$logo=''
+@endphp
+@push('custom-scripts')
+    @if(env('RECAPTCHA_MODULE') == 'on')
+        {!! NoCaptcha::renderJs() !!}
+    @endif
+@endpush
+@section('auth-topbar')
+    <li class="nav-item ">
+        {{-- <select class="btn btn-primary my-1 me-2 " onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" id="language">
+            @foreach(Utility::languages() as $language)
+                <option class="" @if($lang == $language) selected @endif value="{{ route('register',$language) }}">{{Str::upper($language)}}</option>
+            @endforeach
+        </select> --}}
+    </li>
+@endsection
+@section('content')
+    <div class="">
+        <h2 class="mb-3 f-w-600">{{__('Register')}}</h2>
+    </div>
+    <form method="POST" action="{{ route('register') }}">
+        @if (session('status'))
+            <div class="mb-4 font-medium text-lg text-green-600 text-danger">
+                {{ __('Email SMTP settings does not configured so please contact to your site admin.') }}
+            </div>
+        @endif
+        @csrf
+        <div class="">
+            <div class="form-group mb-3">
+                <label for="name" class="form-label">{{__('Name')}}</label>
+                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                @error('name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+            <div class="form-group mb-3">
+                <label for="email" class="form-label">{{__('Email')}}</label>
+                <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                @error('email')
+                <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                @enderror
+                <div class="invalid-feedback">
+                    {{__('Please fill in your email')}}
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="password" class="form-label">{{__('Password')}}</label>
+                <input id="password" type="password" data-indicator="pwindicator" class="form-control pwstrength @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                @error('password')
+                <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                @enderror
+                <div id="pwindicator" class="pwindicator">
+                    <div class="bar"></div>
+                    <div class="label"></div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="password_confirmation" class="form-label">{{__('Password Confirmation')}}</label>
+                <input id="password_confirmation" type="password" data-indicator="password_confirmation" class="form-control pwstrength @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
+                @error('password_confirmation')
+                <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                @enderror
+                <div id="password_confirmation" class="pwindicator">
+                    <div class="bar"></div>
+                    <div class="label"></div>
+                </div>
+            </div>
+            @if(env('RECAPTCHA_MODULE') == 'on')
+                <div class="form-group mb-3">
+                    {!! NoCaptcha::display() !!}
+                    @error('g-recaptcha-response')
+                    <span class="small text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+            @endif
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-block mt-2">{{__('Register')}}</button>
+            </div>
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
-	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        </div>
+        <p class="my-4 text-center">{{__("Already' have an account?")}} <a href="{{ route('login',!empty(\Auth::user()->lang)?\Auth::user()->lang:'en') }}" class="text-primary">{{__('Login')}}</a></p>
 
-	</head>
-	<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">Login #10</h2>
-				</div>
-			</div>
-			<div class="row justify-content-center">
-				<div class="col-md-6 col-lg-4">
-					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Have an account?</h3>
-		      	<form action="#" class="signin-form">
-		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="Username" required>
-		      		</div>
-	            <div class="form-group">
-	              <input id="password-field" type="password" class="form-control" placeholder="Password" required>
-	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-	            </div>
-	            <div class="form-group">
-	            	<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
-	            </div>
-	            <div class="form-group d-md-flex">
-	            	<div class="w-50">
-		            	<label class="checkbox-wrap checkbox-primary">Remember Me
-									  <input type="checkbox" checked>
-									  <span class="checkmark"></span>
-									</label>
-								</div>
-								<div class="w-50 text-md-right">
-									<a href="#" style="color: #fff">Forgot Password</a>
-								</div>
-	            </div>
-	          </form>
-	          <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
-	          <div class="social d-flex text-center">
-	          	<a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
-	          	<a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span> Twitter</a>
-	          </div>
-		      </div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<script src="js/jquery.min.js"></script>
-  <script src="js/popper.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
-
-	</body>
-</html>
-
+    </form>
+@endsection

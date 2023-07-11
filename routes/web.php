@@ -25,7 +25,7 @@ Route::post('/forgot-pass', 'App\Http\Controllers\SigninController@forgotPass')-
 Route::post('/forgot-pass/check-code', 'App\Http\Controllers\SigninController@forgotPassInput')->name('forgotPassInput');
 Route::post('/change-pass', 'App\Http\Controllers\SigninController@changePassword')->name('changePass');
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
-Route::get('/logout', 'App\Http\Controllers\DashboardController@logout');
+Route::get('/logout', 'App\Http\Controllers\DashboardController@logout')->name('logout');
 
 //CheckInOut
 Route::get('/checkin', 'App\Http\Controllers\DashboardController@checkIn');
