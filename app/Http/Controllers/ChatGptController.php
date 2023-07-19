@@ -19,14 +19,21 @@ class ChatGptController extends Controller
         // $setting_chatgpt = setting('site.new_business_fair_copy_chatgpt');
         // $search = str_replace("%text_area%", $sentence, $setting_chatgpt);
         $search = $sentence;
-        $data = $this->makeCallApiChatGpt($search);
-        dd($data);
+        // $data = $this->makeCallApiChatGpt($search);
+        $data['choices'][0]['message'] = ['content' => 'caxxxxxxxxx',
+                                            'role' => 'assistant'];
         $args = [
             'customer_id' => \Auth::user()->id ?? 0,
             'type' => 0,
             'promt' => $search,
             'response' => $data['choices'][0]['message']['content'],
         ];
+
+        $data['choices'][0]['message']['root'] = $sentence;
+
+
+        
+        return response()->json($data['choices'][0]['message'], 200, array(), JSON_PRETTY_PRINT);
 
     }
     
@@ -36,7 +43,7 @@ class ChatGptController extends Controller
             'Authorization' => 'Bearer '.env('OPENAI_API_KEY'),
           ])
           ->post("https://api.openai.com/v1/chat/completions", [
-            "model" => "gpt-3.5-turbo-0613",
+            "model" => "gpt-3.5-turbo",
             'messages' => [
                 [
                    "role" => "user",
