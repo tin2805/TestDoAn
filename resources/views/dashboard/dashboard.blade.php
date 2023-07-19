@@ -103,24 +103,19 @@
                                 <center>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            {{-- {{Form::open(array('url'=>'attendanceemployee/attendance','method'=>'post'))}} --}}
-                                            <form>
-                                            @if(empty($employeeAttendance) || $employeeAttendance->clock_out != '00:00:00')
-                                                <button type="submit" value="0" name="in" id="clock_in" class="btn btn-success ">{{__('CLOCK IN')}}</button>
+                                            @if(empty($checkin))
+                                                <a href="{{asset('/checkin')}}" id="clock_in" class="btn btn-success ">{{__('CLOCK IN')}}</a>
                                             @else
                                                 <button type="submit" value="0" name="in" id="clock_in" class="btn btn-success disabled" disabled>{{__('CLOCK IN')}}</button>
                                             @endif
 
                                         </div>
                                         <div class="col-md-6 ">
-                                            @if(!empty($employeeAttendance) && $employeeAttendance->clock_out == '00:00:00')
-                                                {{Form::model($employeeAttendance,array('route'=>array('attendanceemployee.update',$employeeAttendance->id),'method' => 'PUT')) }}
-                                                <button type="submit" value="1" name="out" id="clock_out" class="btn btn-danger">{{__('CLOCK OUT')}}</button>
+                                            @if(!empty($checkin) && empty($checkin->end_time))
+                                                <a href="{{asset('/checkout')}}" id="clock_out" class="btn btn-danger">{{__('CLOCK OUT')}}</a>
                                             @else
                                                 <button type="submit" value="1" name="out" id="clock_out" class="btn btn-danger disabled" disabled>{{__('CLOCK OUT')}}</button>
                                             @endif
-                                            {{-- {{Form::close()}} --}}
-                                            </form>
                                         </div>
                                     </div>
                                 </center>

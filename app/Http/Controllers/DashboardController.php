@@ -22,7 +22,8 @@ class DashboardController extends Controller
     // }
 
     public function index() {
-        return view('dashboard.dashboard');
+        $checkin = CheckInOut::where('employee_id', Auth::id())->whereBetween('created_at', [date("Y-m-d H:i:s", strtotime("midnight", time())), date("Y-m-d H:i:s", strtotime("tomorrow", time()) - 1)])->first();
+        return view('dashboard.dashboard')->with(compact('checkin'));
     }
 
     public function logout() {
@@ -78,8 +79,8 @@ class DashboardController extends Controller
             if(now() > "7:00 PM"){
                 $args['OT'] = true;
             }
-    
-            $checkin::update($args);
+
+            $checkin->update($args);
             return redirect()->back()->with('success_message', 'Success checkout to day');
         }
         else{

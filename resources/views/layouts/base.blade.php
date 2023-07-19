@@ -66,6 +66,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/customizer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" id="main-style-link">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     @stack('css-page')
 </head>
@@ -198,6 +199,27 @@
             </div>
         </div>
     @yield('content')
+        <div class="chat-box">
+            <div class="chat-box-header" onclick="showHide()">
+                <h3>Chat Bot</h3>
+                <span class="chat-box-arrow-up" id="chat-box-arrow"></span>
+            </div>
+            <div class="chat-box-mess">
+                
+            </div>
+
+            <div class="chat-box-btn-div">
+                <div class="chat-box-btn-div-bottom">
+                    <form role="form" id="ai_chat" action="{{url('/ai-ask')}}" method="post" enctype="multipart/form-data">
+                        {{csrf_field()}}
+                        <input type="text" name="chatgpt" placeholder="Enter chat here">
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
     <!-- [ Main Content ] end -->
     </div>
 </div>
@@ -224,5 +246,55 @@
 </div>
 @include('partials.admin.footer')
 @include('Chatify::layouts.footerLinks')
+    <script src="js-loading-overlay.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-loading-overlay@1.1.0/dist/js-loading-overlay.min.js"></script>
+    <script>
+            var url_chat = "{{url('/ai-ask')}}";
+           $("form#ai_chat").submit(function(){
+                event.preventDefault();
+                var formData = new FormData(this);
+                var chat  = $('<div class="chat-box-mess-text-chat">' +formData.get('chatgpt').replace(/\n/g,'<br />') + '</div>');
+                var messChatDiv = $('.chat-box-mess');
+                messChatDiv.append(chat);
+
+                $.ajax({
+                url: url_chat,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    var content  = $('<div class="chat-box-mess-text">' +response.content.replace(/\n/g,'<br />') + '</div>');
+                    var messDiv = $('.chat-box-mess')
+                    messDiv.append(content);
+                    messDiv.scrollTop(messDiv[0].scrollHeight);
+                    $('#chat-box-arrow').removeClass('chat-box-arrow-up')
+                    $('#chat-box-arrow').addClass('chat-box-arrow-down')
+                    $('#btn_copy').css('background-color', '#2662b6');
+                },
+                error: function(xhr, status, error) {
+                    return false;
+                }
+                });
+
+                return false;
+            });
+    </script>
+    <script>
+        function showHide(){
+            if($('.chat-box').hasClass('show_chatbox')){
+                $('.chat-box').removeClass('show_chatbox');
+                $('.chat-box').addClass('hide_chatbox');
+                $('#chat-box-arrow').removeClass('chat-box-arrow-down')
+                $('#chat-box-arrow').addClass('chat-box-arrow-up')
+
+            }else{
+                $('.chat-box').addClass('show_chatbox');
+                $('.chat-box').removeClass('hide_chatbox');
+                $('#chat-box-arrow').removeClass('chat-box-arrow-up')
+                $('#chat-box-arrow').addClass('chat-box-arrow-down')
+            }
+        }
+    </script>
 </body>
 </html>
