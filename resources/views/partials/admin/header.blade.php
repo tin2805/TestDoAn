@@ -45,21 +45,21 @@
                     </a>
                     <div class="dropdown-menu dash-h-dropdown">
 
-                        {{-- <!-- <a href="{{ route('change.mode') }}" class="dropdown-item">
+                        <a href="{{ route('change.mode') }}" class="dropdown-item">
                             <i class="ti ti-circle-plus"></i>
-                            <span>{{(Auth::user()->dark_mode == 1) ? __('Dark Mode') : __('Light Mode')}}</span>
-                        </a> --> --}}
+                            <span>{{(Auth::user()->dark_mode == 0) ? __('Dark Mode') : __('Light Mode')}}</span>
+                        </a>
 
-                        {{-- <a href="{{route('profile')}}" class="dropdown-item">
+                        <a href="{{route('profile')}}" class="dropdown-item">
                             <i class="ti ti-user"></i>
                             <span>{{__('Profile')}}</span>
-                        </a> --}}
+                        </a>
 
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" class="dropdown-item">
                             <i class="ti ti-power"></i>
                             <span>{{__('Logout')}}</span>
                         </a>
-                        <form id="frm-logout" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <form id="frm-logout" action="{{ route('logout') }}" method="GET" class="d-none">
                             {{ csrf_field() }}
                         </form>
 
@@ -81,37 +81,6 @@
                         </a>
                     </li>
                 @endif
-
-
-
-
-                <li class="dropdown dash-h-item drp-language">
-                    <a
-                        class="dash-head-link dropdown-toggle arrow-none me-0"
-                        data-bs-toggle="dropdown"
-                        href="#"
-                        role="button"
-                        aria-haspopup="false"
-                        aria-expanded="false"
-                    >
-                        <i class="ti ti-world nocolor"></i>
-                        <span class="drp-text hide-mob">{{Str::upper(isset($lang)?$lang:'en')}}</span>
-                        <i class="ti ti-chevron-down drp-arrow nocolor"></i>
-                    </a>
-                    <div class="dropdown-menu dash-h-dropdown dropdown-menu-end">
-
-                        {{-- @foreach($languages as $language)
-                            <a href="{{route('change.language',$language)}}" class="dropdown-item @if($language == $lang) text-danger @endif">
-                                <span>{{Str::upper($language)}}</span>
-                            </a>
-                        @endforeach --}}
-                        <h></h>
-                            @if(\Auth::user()->type=='super admin')
-
-                                <a class="dropdown-item text-primary" href="{{route('manage.language',[isset($lang)?$lang:'en'])}}">{{ __('Manage Language ') }}</a>
-                            @endif
-                    </div>
-                </li>
             </ul>
         </div>
     </div>

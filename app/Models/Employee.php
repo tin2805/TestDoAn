@@ -28,5 +28,15 @@ class Employee extends \TCG\Voyager\Models\User
 
     protected $fillable = ['fullname','email','phone','user_name','address', 'password', 'code'];
 
+    public function dateFormat($date)
+    {
+
+        return date('Y-m-d', strtotime($date));
+    }
+
+    public static function timeFormat($time)
+    {
+        return date('h:i:s', strtotime($time));
+    }
 
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\CheckInOut;
+use App\Models\Employee;
 
 class DashboardController extends Controller
 {
@@ -30,6 +31,12 @@ class DashboardController extends Controller
         Auth::guard()->logout();
 
         return redirect('/signin');
+    }
+
+    public function attendance(){
+        $attendanceEmployee = CheckInOut::where('employee_id', Auth::id())->get();
+
+        return view('attendance.index')->with(compact('attendanceEmployee'));
     }
 
     public function checkin() {
@@ -86,6 +93,17 @@ class DashboardController extends Controller
         else{
             return redirect()->back()->with('error_message', 'Wrong Ip Company');
         }
+    }
 
+    public function changeMode() {
+        $employee = Employee::where('id', Auth::id())->first();
+        if($employee->dark_mode == 1){
+            Employee::where('id', Auth::id())->update(['dark_mode' => 0]);
+            return redirect()->back()->with('success', 'Change Light Mode Complete');
+        }
+        else{
+            Employee::where('id', Auth::id())->update(['dark_mode' => 1]);
+            return redirect()->back()->with('success', 'Change Dark Mode Complete');
+        }
     }
 }
