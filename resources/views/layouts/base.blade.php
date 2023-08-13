@@ -57,12 +57,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style-rtl.css') }}">
     {{-- @if ($SITE_RTL == 'on')
         <link rel="stylesheet" href="{{ asset('assets/css/style-rtl.css') }}">
-    @endif
-    @if ($setting['cust_darklayout'] == 'on')
+    @endif --}}
+    @if (\Auth::user()->dark_mode == '1')
         <link rel="stylesheet" href="{{ asset('assets/css/style-dark.css') }}">
     @else
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="main-style-link">
-    @endif --}}
+    @endif
 
     <link rel="stylesheet" href="{{ asset('assets/css/customizer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" id="main-style-link">

@@ -2727,8 +2727,7 @@ class Utility extends Model
         }
         else
         {
-            $user = User::where('type','super admin')->first();
-            $setting = DB::table('settings')->where('created_by',$user->id)->pluck('value','name')->toArray();
+            $setting = DB::table('settings')->where('created_by', 1)->pluck('value','name')->toArray();
         }
 
         if(!isset($setting['color']))

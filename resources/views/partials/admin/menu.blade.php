@@ -123,7 +123,12 @@
 
                     @if(true)
                         <li class="dash-item dash-hasmenu {{ (Request::segment(1) == 'support')?'active':''}}">
-                            <a href="" class="dash-link">
+                            <a href="{{url('attendance')}}" class="dash-link">
+                                <span class="dash-micon"><i class="ti ti-headphones"></i></span><span class="dash-mtext">{{__('Attendance')}}</span>
+                            </a>
+                        </li>
+                        <li class="dash-item dash-hasmenu {{ (Request::segment(1) == 'support')?'active':''}}">
+                            <a href="{{url('support')}}" class="dash-link">
                                 <span class="dash-micon"><i class="ti ti-headphones"></i></span><span class="dash-mtext">{{__('Support System')}}</span>
                             </a>
                         </li>
