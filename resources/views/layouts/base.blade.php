@@ -204,16 +204,39 @@
                 <h3>Chat Bot</h3>
                 <span class="chat-box-arrow-up" id="chat-box-arrow"></span>
             </div>
-            <div class="chat-box-mess">
-                
+            @php
+                $chat_logs = \App\Models\ChatGptLog::where('employee_id', \Auth::id())->get()
+            @endphp
+            <div class="chat-box-mess" id="chat-box-mess">
+                @if($chat_logs)
+                    @foreach ($chat_logs as $chat_log)
+                        <div class="chat-box-mess-text-chat">{{$chat_log->prompt}}</div>
+                        <div class="chat-box-mess-text">{{$chat_log->response}}</div>
+                    @endforeach
+                @endif
+                {{-- <div class="chat-box-mess-loading" \>
+                    <div id="loading-bubble" class="chat-box-mess-text">
+                        <div class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                    </div>
+                </div> --}}
+
+
             </div>
 
             <div class="chat-box-btn-div">
                 <div class="chat-box-btn-div-bottom">
                     <form role="form" id="ai_chat" action="{{url('/ai-ask')}}" method="post" enctype="multipart/form-data">
                         {{csrf_field()}}
-                        <input type="text" name="chatgpt" placeholder="Enter chat here">
-                        <button type="submit">Submit</button>
+                        <select name="role" id="ai_chat">
+                            <option value="0">User</option>
+                            <option value="1">System</option>
+                        </select>
+                        <input type="text" name="chatgpt" id="chatgpt" placeholder="Enter chat here">
+                        <button type="submit" class="reset-btn">Submit</button>
                     </form>
                 </div>
 
@@ -249,21 +272,34 @@
     <script src="js-loading-overlay.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-loading-overlay@1.1.0/dist/js-loading-overlay.min.js"></script>
     <script>
-            var url_chat = "{{url('/ai-ask')}}";
-           $("form#ai_chat").submit(function(){
-                event.preventDefault();
-                var formData = new FormData(this);
-                var chat  = $('<div class="chat-box-mess-text-chat">' +formData.get('chatgpt').replace(/\n/g,'<br />') + '</div>');
-                var messChatDiv = $('.chat-box-mess');
-                messChatDiv.append(chat);
+        var url_chat = "{{url('/ai-ask')}}";
+        $("form#ai_chat").submit(function(){
+            event.preventDefault();
+            var formData = new FormData(this);
+            var messChatDiv = $('.chat-box-mess');
+            var chat  = $('<div class="chat-box-mess-text-chat">' +formData.get('chatgpt').replace(/\n/g,'<br />') + '</div>');
+            messChatDiv.append(chat);
+            var loading = $('<div class="chat-box-mess-loading"><div id="loading-bubble"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>')
+            messChatDiv.delay(800).queue(function (next) {
+                $(this).append(loading);
+                next();
+                messChatDiv.scrollTop(messChatDiv[0].scrollHeight);
+            });
+            messChatDiv.scrollTop(messChatDiv[0].scrollHeight);
 
-                $.ajax({
+            $.ajax({
                 url: url_chat,
                 type: 'POST',
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: function(response) {
+                    $('.chat-box-mess-loading').remove();
+
+                    if(response.type == 'dark_mode'){
+                        window.location.reload();
+                    }
+
                     var content  = $('<div class="chat-box-mess-text">' +response.content.replace(/\n/g,'<br />') + '</div>');
                     var messDiv = $('.chat-box-mess')
                     messDiv.append(content);
@@ -275,13 +311,15 @@
                 error: function(xhr, status, error) {
                     return false;
                 }
-                });
-
-                return false;
             });
+            document.getElementById('ai_chat').reset();;
+            return false;
+        });
     </script>
     <script>
         function showHide(){
+            var messChatDiv = $('.chat-box-mess');
+            messChatDiv.scrollTop(messChatDiv[0].scrollHeight);
             if($('.chat-box').hasClass('show_chatbox')){
                 $('.chat-box').removeClass('show_chatbox');
                 $('.chat-box').addClass('hide_chatbox');
