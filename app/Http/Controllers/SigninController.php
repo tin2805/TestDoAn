@@ -60,13 +60,13 @@ class SigninController extends Controller
         ];
         Mail::to($employee->email)->send(new MailNotify($message));
         
-        return view('forgot_pass_input')->with(compact('employee'));
+        return view('passwords.email')->with(compact('employee'));
     }
 
     public function forgotPassInput(Request $request){
         $employee = Employee::where('email', $request->email)->first();
         if($request->code = $employee->code) {
-            return view('change_password')->with(compact('employee'));
+            return view('passwords.reset')->with(compact('employee'));
         }
         else {
             return redirect()->back()->with('message', 'invalid code');
@@ -75,7 +75,7 @@ class SigninController extends Controller
 
     public function changePassword(Request $request){
         $employee = Employee::where('email', $request->email)->first();
-        if($request->password == $request->re_password){
+        if($request->password == $request->password_confirmation){
             $employee->update(['password' => Hash::make($request->password)]);
             Auth::loginUsingId($employee->id);
 
@@ -84,7 +84,7 @@ class SigninController extends Controller
             return redirect($redirectTo ?? "/dashboard");
         }
         else{
-            return view('change_password')->with(compact('employee'))->with('message', 'Wrong Re Password');
+            return view('passwords.reset')->with(compact('employee'))->with('message', 'Wrong Re Password');
         }
     }
 }
