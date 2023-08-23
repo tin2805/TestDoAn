@@ -125,12 +125,10 @@
                                         <h5>{{ __('Event') }}</h5>
                                     </div>
                                     <div class="col-lg-6">
-                                        @if (isset($setting['google_calendar_enable']) && $setting['google_calendar_enable'] == 'on')
                                         <select class="form-control" name="calender_type" id="calender_type" style="float: right;width: 150px;" onchange="get_data()">
                                             <option value="goggle_calender">{{__('Google Calender')}}</option>
                                             <option value="local_calender" selected="true">{{__('Local Calender')}}</option>
                                         </select>
-                                        @endif
                                         <input type="hidden" id="event_dashboard" value="{{url('/')}}">
                                     </div>
                                 </div>
@@ -248,13 +246,10 @@
                                         <h5>{{ __('Event') }}</h5>
                                     </div>
                                     <div class="col-lg-6">
-
-                                        @if(isset($setting['google_calendar_enable']) && $setting['google_calendar_enable'] == 'on')
-                                            <select class="form-control" name="calender_type" id="calender_type" style="float: right;width: 150px;" onchange="get_data()">
-                                                <option value="goggle_calender">{{__('Google Calender')}}</option>
-                                                <option value="local_calender" selected="true">{{__('Local Calender')}}</option>
-                                            </select>
-                                        @endif
+                                        <select class="form-control" name="calender_type" id="calender_type" style="float: right;width: 150px;" onchange="get_data()">
+                                            <option value="goggle_calender">{{__('Google Calender')}}</option>
+                                            <option value="local_calender" selected="true">{{__('Local Calender')}}</option>
+                                        </select>
                                         <input type="hidden" id="event_dashboard" value="{{url('/')}}">
                                     </div>
                                 </div>

@@ -299,6 +299,9 @@
                     if(response.type == 'dark_mode'){
                         window.location.reload();
                     }
+                    else if(response.type == 'go_page'){
+                        window.location.href = response.url;
+                    }
 
                     var content  = $('<div class="chat-box-mess-text">' +response.content.replace(/\n/g,'<br />') + '</div>');
                     var messDiv = $('.chat-box-mess')
