@@ -408,8 +408,8 @@ function IDinfo(id) {
        // focus on messaging input
        messageInput.focus();
        // update info in view
-       $(".messenger-infoView .info-name").text(data.fetch.name);
-       $(".m-header-messaging .user-name").text(data.fetch.name);
+       $(".messenger-infoView .info-name").text(data.fetch.fullname);
+       $(".m-header-messaging .user-name").text(data.fetch.fullname);
        // Star status
        data.favorite > 0
          ? $(".add-to-favorite").addClass("favorite")

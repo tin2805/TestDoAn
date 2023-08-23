@@ -1,6 +1,7 @@
 <?php
 
-return [
+$conf = [
+
 
     /*
     |--------------------------------------------------------------------------
@@ -14,7 +15,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'employee',
         'passwords' => 'users',
     ],
 
@@ -40,10 +41,13 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
+        'employee' => [
+            'driver' => 'session',
+            'provider' => 'employee',
+        ],
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
+            'provider' => 'employee',
             'hash' => false,
         ],
     ],
@@ -70,7 +74,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
+        'employee' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employee::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -99,6 +106,12 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'employee' => [
+            'provider' => 'employee',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
 
     /*
@@ -115,3 +128,17 @@ return [
     'password_timeout' => 10800,
 
 ];
+
+//set account url
+$uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+
+
+if (strpos($uri, '/admin/') === 0 || $uri === '/admin') {
+
+    $conf['defaults'] = [
+        'guard' => 'web',
+        'passwords' => 'users',
+    ];
+};
+
+return $conf;

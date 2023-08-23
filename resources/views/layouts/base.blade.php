@@ -1,562 +1,341 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>JSaaS</title>
-  <meta name="viewport" content="width=device-width">
-  @if ((Request::is('*/document/*') || Request::is('*/movie/*')) && !empty($thumb))
-  <meta name="twitter:card" content="summary_large_image">
-  <meta property="og:title" content="{{ $title }}" />
-  <meta name="twitter:title" content="{{ $title }}">
-  <meta property="og:image" content="{{ asset('/storage/' . $thumb) }}" />
-  <meta name="twitter:image" content="{{ asset('/storage/' . $thumb) }}">
-  @endif
-  @if (!Auth::check() && Route::currentRouteName() == 'newBusiness.detail')
-  <meta name="googlebot" content="noindex">
-  @endif
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="http://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5179987.js"></script>
-
-    <!-- font -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style"
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap"
-        media="print" onload="this.media='all'" />
-    @yield('head')
-  <style>
-    .sidebar .inSidebar__menu__list__item__header:hover {
-      color: #000;
-      background-color: #e8ebee;
-    }
-
-    .sidebar .inSidebar__menu__list__item__header.el_open {
-      color: #000;
-      background-color: rgb(93 140 210 / 50%);
-       !important: ;
-    }
-
-
-    .sidebar .inSidebar__menu__list__item__header.el_open i {
-      color: #7b7e82;
-    }
-
-    .sidebar .inSidebar__menu__list__item__header.el_open.el_hasInner::after {
-      transform: translateY(-50%) rotate(0deg);
-      background-color: #7b7e82;
-    }
-
-    .sidebar .inSidebar__menu__list__item__header:hover {
-      background-color: rgb(93 140 210 / 70%);
-       !important;
-    }
-    .hidden {
-      display: none !important;
-    }
-  </style>
-
-   <!-- Google tag (gtag.js) -->
-   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LKZ50MLG8V"></script>
-   <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-LKZ50MLG8V');
-    </script>
-
-</head>
 @php
-if (Auth::check()) {
-    $page_data = App\Models\JmAgent::get_page_data_auth();
-    $agent_intro = App\Models\JmAgentIntro::where('customer_id', Auth::User()->id)->first();
-    $agent = [];
-    if ($agent_intro) {
-        $agent = App\Models\JmAgent::where('id', $agent_intro->agent_id)->first();
-    }
-}
+    use App\Models\Utility;
+
+        //$logo=asset(Storage::url('uploads/logo/'));
+           $logo=\App\Models\Utility::get_file('uploads/logo');
+
+        $company_favicon=Utility::getValByName('company_favicon');
+        $setting = \App\Models\Utility::colorset();
+        $company_logo = \App\Models\Utility::GetLogo();
+        $mode_setting = \App\Models\Utility::mode_layout();
+        $color = (!empty($setting['color'])) ? $setting['color'] : 'theme-3';
+        $SITE_RTL = Utility::getValByName('SITE_RTL');
+        $lang=Utility::getValByName('default_language');
+
 
 @endphp
+    <!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="">
 
-<body>
-  @if(\Auth::check())
-  <header class="header">
 
-    <div class="inHeader" style="background:{{ $page_data->base_color ?? '' }}">
-      <div class="inHeader__ttl">
-        <h1>
-          @if (isset($page_data->logo) && $page_data->logo)
-            @if ($page_data->logo_margin)
-              <a href="{{ route('home.dashboard') }}" alt="JSaaS"><img class="hasMargin"
-                  src="{{ Storage::disk('local')->url($page_data->logo) }}" alt="ttl"
-                  style="width: {{ $page_data->logo_width }}px"></a>
-            @else
-              <a href="{{ route('home.dashboard') }}" alt="JSaaS"><img
-                  src="{{ Storage::disk('local')->url($page_data->logo) }}" alt="ttl"
-                  style="width: {{ $page_data->logo_width }}px"></a>
-            @endif
-          @else
-            <a href="{{ route('home.dashboard') }}" alt="JSaaS"><img src="{{ asset('/img/logo/title2.svg') }}"
-                alt="JSaaS"></a>
-          @endif
-        </h1>
-      </div>
-      <div class="inHeader__name">
-        <p>@yield('セクション名'){{ @Auth::User()->corp_name }}</p>
-      </div>
-      <div class="inHeader__menu">
-        @if (Auth::check())
-          <div class="inHeader__menu--item">
-            <a target="_blank" href="https://tayori.com/faq/d86853b9838ac24ac5f627442e21c7fbe863820f/detail/4414b1d710c0018e7bd632448e39041ffd31b53f/">
-              <img class="bl_headerIcon" src="{{ asset('img/page/common/icon_beginner.svg') }}" alt="">
-              <span>使い方</span>
-            </a>
-          </div>
-          <div class="inHeader__menu--item">
-            <a target="_blank" href="https://tayori.com/faq/d86853b9838ac24ac5f627442e21c7fbe863820f/">
-              <i class="far fa-question-circle"></i>
-              <span>FAQ</span>
-            </a>
-          </div>
-          <div id="user_icon_btn" class="inHeader__menu--item">
-            <a href="#">
-              <i class="far fa-user-circle"></i>
-              <span>{{ @Auth::User()->manager }}</span>
-            </a>
-            <div class="user_icon_menu">
-              <ul>
-                <li>
-                  <a href="{{ route('home.setting') }}">設定</a>
-                </li>
-                <li>
-                  <a href="{{ route('home.logout') }}">ログアウト</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        @endif
-      </div>
-      <div id="menu_btn" class="menu_btn">
-        <button>
-          <i style="color:#FFFFFF;" class="fas fa-bars open_icon"></i>
-          <i style="color:#FFFFFF;" class="fas fa-times close_icon"></i>
-        </button>
-      </div>
+<meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <title></title>
+    <script src="{{ asset('js/html5shiv.js') }}"></script>
+{{--    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>--}}
+{{--    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>--}}
+
+    <!-- Meta -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="url" content="{{ url('').'/'.config('chatify.path') }}" data-user="{{ Auth::user()->id }}">
+    <link rel="icon" href="" type="image" sizes="16x16">
+
+    <!-- Favicon icon -->
+{{--    <link rel="icon" href="{{ asset('assets/images/favicon.svg') }}" type="image/x-icon"/>--}}
+    <!-- Calendar-->
+    @stack('css-page')
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/main.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/flatpickr.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/animate.min.css') }}">
+
+
+    <!-- font css -->
+    <link rel="stylesheet" href="{{ asset('assets/fonts/tabler-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/feather.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/material.css') }}">
+
+    <!--bootstrap switch-->
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/bootstrap-switch-button.min.css') }}">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style-rtl.css') }}">
+    {{-- @if ($SITE_RTL == 'on')
+        <link rel="stylesheet" href="{{ asset('assets/css/style-rtl.css') }}">
+    @endif --}}
+    @if (\Auth::user()->dark_mode == '1')
+        <link rel="stylesheet" href="{{ asset('assets/css/style-dark.css') }}">
+    @else
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="main-style-link">
+    @endif
+
+    <link rel="stylesheet" href="{{ asset('assets/css/customizer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" id="main-style-link">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    @stack('css-page')
+</head>
+<body class="red">
+
+
+<!-- [ Pre-loader ] start -->
+<div class="loader-bg">
+    <div class="loader-track">
+        <div class="loader-fill"></div>
     </div>
-  </header>
-  @endif
-  <div class="subHeader">
-    <ul>
-      @yield('subHeader')
-    </ul>
-  </div>
-  <div id="sidebar" class="sidebar">
-    <div class="inSidebar">
-      {{-- <nav class="inSidebar__menu">
-        <ul class="inSidebar__menu__list">
+</div>
 
-          @php
-            $data = [];
-            if(menu('会員メニュー', '_json')){
-                $data = menu('会員メニュー', '_json')->toArray();
-            }
+@include('partials.admin.menu')
+<!-- [ navigation menu ] end -->
+<!-- [ Header ] start -->
+@include('partials.admin.header')
 
-            $queryString = request()->getQueryString();
-            $path = request()->path();
-            if($queryString){
-                $path .= '?'.$queryString;
-            }
-
-          @endphp
-
-          @foreach ($data as $item)
-
-            @if ( !isset($agent['roll_customer']) || (isset($agent['roll_customer']) && !str_contains($agent['roll_customer'], $item['param_roll_customer'])) || $item['param_roll_customer'] == null)
-                <li
-                class="inSidebar__menu__list__item {{ count($item['children']) > 0 ? 'js_accordion' : '' }} @if (count($item['children']) == 0 ) {{ $item['url']  == '/'.$path ? 'el_active' : '' }} @endif">
-                @if (count($item['children']) == 0 )
-                <a class="inSidebar__menu__list__item__header"
-                    @if (Auth::check()) href="{{$item['url'] }}"
-                                @else
-                                    href="javascript:;" v-on:click="showModal" @endif>
-                    <i class="{{ $item['icon_class'] }}"></i>
-                    <span>{{ $item['title'] }}</span>
-                </a>
-                @else
-                <div
-                    class="js_accordion_header inSidebar__menu__list__item__header el_hasInner {{ str_contains('/'.$path , $item['url'] ) ? 'el_open' : '' }}">
-                    <i class="{{ $item['icon_class'] }}"></i>
-                    <span>{{ $item['title'] }}</span>
-                    @if(Auth::user())
-                    @php
-                        $unread = Auth::user()->unreadMessConsul();
-                    @endphp
-                    @if ($item['url'] == 'consul' && isset($unread[1]) && $unread[1] )
-                        <span class="unread_message">{{ @array_sum($unread[0]) }}</span>
-                    @endif
-                    @endif
+<!-- Modal -->
+<div class="modal notification-modal fade"
+     id="notification-modal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true"
+>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button
+                    type="button"
+                    class="btn-close float-end"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+                <h6 class="mt-2">
+                    <i data-feather="monitor" class="me-2"></i>Desktop settings
+                </h6>
+                <hr/>
+                <div class="form-check form-switch">
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="pcsetting1"
+                        checked
+                    />
+                    <label class="form-check-label f-w-600 pl-1" for="pcsetting1"
+                    >Allow desktop notification</label
+                    >
                 </div>
-
-                <ul class="js_accordion_inner"
-
-                    style="display:{{ str_contains('/'.$path , $item['url'] ) ? 'block' : '' }};">
-                    @foreach ($item['children'] as $child)
-                    @if ( !isset($agent['roll_customer']) || (isset($agent['roll_customer']) && !str_contains($agent['roll_customer'], $child['param_roll_customer'])) || $child['param_roll_customer'] == null)
-                        <li>
-                            <a @if (isset($child['anchor_tag'])) @if ($child['url']  == '/'.$path)
-                                                        style="background-color:#7d8185;color:#FFFFFF;" @endif
-                            @elseif($child['url']  == '/'.$path) style="background-color:#7d8185;color:#FFFFFF;"
-                            @endif
-                            @if (Auth::check() || (!Auth::check() && $child['url'] == 'consultation')) href="{{ $child['url'] }}"
-                                                @else
-
-                                                    href="javascript:;" v-on:click="showModal" @endif
-                            >
-                            <dd class="ac-child">{{ $child['title'] }}</dd>
-                            </a>
-                        </li>
-                    @endif
-
-                    @endforeach
-                </ul>
-                @endif
-            </li>
-            @if ($item['title'] == "資料請求")
-                <li class="inSidebar__menu__list__item @if('/'.$path == '/home/store/list') el_active @endif">
-                  <a href="{{url('home/store/list')}}" class="inSidebar__menu__list__item__header"><i class="fas fa-store-alt"></i>JSaaSストア設定</a>
-                </li>
-            @endif
-            @endif
-
-          @endforeach
-
-
-        </ul>
-      </nav> --}}
-      @php
-            $path = request()->path();
-
-      @endphp
-      @if(\Auth::check())
-      <nav class="inSidebar__menu">
-        <ul class="inSidebar__menu__list">
-          <li
-          class="inSidebar__menu__list__item @if('/'.$path == '/home/dashboard') el_active @endif">
-          <a class="inSidebar__menu__list__item__header" href="{{url('home/dashboard')}}">
-              <i class="fas fa-th-large"></i>
-              <span>ダッシュボード</span>
-          </a>
-          </li>
-          <li class="inSidebar__menu__list__item js_accordion">
-            <div
-                class="js_accordion_header inSidebar__menu__list__item__header el_hasInner @if($path == 'home/document' || $path == 'home/movie' || $path == 'home/consultation') el_open @endif">
-                <i class="fas fa-file-alt"></i>
-                <span>補助金申請をする</span>
-            </div>
-            <ul class="js_accordion_inner" @if($path == 'home/document' || $path == 'home/movie' || $path == 'home/consultation' || $path == 'new-business/create') style="display: block;background-color: #dae5f9" @endif>
-              <li class="child">
-                <a href="{{url('home/document')}}" class="inSidebar__menu__list__item__header">資料ダウンロード</a>
-              </li>
-              <li class="child">
-                <a href="{{url('home/movie')}}" class="inSidebar__menu__list__item__header">ノウハウ動画</a>
-              </li>
-
-              @if (@Auth::user()->batonz_id)
-                <li class="child">
-                    <a  href="javascript:;"   v-on:click="showModalBatonz" class="inSidebar__menu__list__item__header ">専門家相談</a>
-                </li>
-              @else
-                <li class="child">
-                    <a  href="{{ url('home/consultation')}}" class="inSidebar__menu__list__item__header ">専門家相談</a>
-                </li>
-
-
-              @endif
-
-              <li class="child ">
-                <a href="{{url('new-business/create')}}" class="inSidebar__menu__list__item__header">事業計画書作成</a>
-              </li>
-            </ul>
-          </li>
-
-          <li class="inSidebar__menu__list__item js_accordion">
-            <div
-                class="js_accordion_header inSidebar__menu__list__item__header el_hasInner @if($path == 'home/setting/info/edit' || $path == 'home/diagnose') el_open @endif">
-                <i class="fas fa-search"></i>
-                <span>制度を調べる</span>
-            </div>
-            <ul class="js_accordion_inner" @if($path == 'home/setting/info/edit' || $path == 'home/diagnose') style="display: block;background-color: #dae5f9" @endif>
-              <li class="child hidden">
-                <a href="child" class="inSidebar__menu__list__item__header">おすすめ補助金</a>
-              </li>
-              <li class="child">
-                <a href="{{url('home/setting/info/edit?page=info')}}" class="inSidebar__menu__list__item__header">自動マッチング</a>
-              </li>
-              @if (@!Auth::user()->batonz_id )
-                <li class="child">
-                    <a href="{{url('home/diagnose')}}" class="inSidebar__menu__list__item__header">検索</a>
-                </li>
-              @endif
-
-            </ul>
-          </li>
-
-          <li class="inSidebar__menu__list__item js_accordion">
-            <div
-                class="js_accordion_header inSidebar__menu__list__item__header el_hasInner">
-                <i class="fas fa-th-list"></i>
-                <span>対象サービス一覧</span>
-            </div>
-            <ul class="js_accordion_inner" @if($path == 'store' ||$path == 'demand?') style="display: block;background-color: #dae5f9" @endif>
-              <li class="child">
-                {{-- <a href="{{url('store')}}" class="inSidebar__menu__list__item__header">JSaaSストアー</a> --}}
-                <a href="{{url('store')}}" class="inSidebar__menu__list__item__header">JSaaSストア</a>
-              </li>
-              <li class="child">
-                <a href="{{url('demand?')}}" class="inSidebar__menu__list__item__header">資料ライブラリ</a>
-              </li>
-            </ul>
-          </li>
-
-          <li class="inSidebar__menu__list__item js_accordion">
-            <div
-                class="js_accordion_header inSidebar__menu__list__item__header el_hasInner @if($path == 'store/signup' || $path == 'home/demand/create') el_open @endif">
-                <i class="fas fa-hands-helping"></i>
-                <span>ビジネスマッチング</span>
-            </div>
-            <ul class="js_accordion_inner" @if($path == 'home/store' || $path == 'home/demand/create') style="display: block;background-color: #dae5f9" @endif>
-              <li class="child">
-                <a href="{{url('home/store')}}" class="inSidebar__menu__list__item__header">ストア掲載</a>
-              </li>
-              <li class="child">
-                <a href="{{url('home/demand/create?pid=')}}" class="inSidebar__menu__list__item__header">ライブラリ掲載</a>
-              </li>
-            </ul>
-          </li>
-
-          <li class="inSidebar__menu__list__item js_accordion">
-            <div
-                class="js_accordion_header inSidebar__menu__list__item__header el_hasInner @if($path == 'home/setting') el_open @endif">
-                <i class="fas fa-cog"></i>
-                <span>企業情報設定</span>
-            </div>
-            <ul class="js_accordion_inner" @if($path == 'home/setting') style="display: block;background-color: #dae5f9" @endif>
-              <li class="child hidden">
-                <a href="" class="inSidebar__menu__list__item__header">ポイント管理</a>
-              </li>
-              <li class="child hidden">
-                <a href="" class="inSidebar__menu__list__item__header">報酬金額確認</a>
-              </li>
-              <li class="child">
-                <a href="{{url('home/setting?page=default')}}" class="inSidebar__menu__list__item__header">登録情報</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      @endif
-    </div>
-    <modal
-    name="modal-batonz-area"
-    :width="'525px'"
-    :height="'310px'"
-    class="batonz__modal"
-    >
-        <div class="modal-area-inner">
-            <span class="hide"  v-on:click="hideModalBatonz" >
-            <span class="demandPublic__modal__inner__hide__cross"></span>閉じる</span>
-            <div class="modal-area-inner-content">
-
-                <h2>補助金や助成金の申請について、 B CASS <br>のチャットから顧問への相談が可能です。</h2>
-                <span>
-                    ※チャット画面に遷移します
-                </span>
-                <div class="batonz__btnCol">
-                    <a href="https://batonz.jp/user/portal/consultation_request" class="mark04">専門家に相談する</a>
+                <p class="text-muted ms-5">
+                    you get lettest content at a time when data will updated
+                </p>
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="pcsetting2"/>
+                    <label class="form-check-label f-w-600 pl-1" for="pcsetting2"
+                    >Store Cookie</label
+                    >
                 </div>
-
+                <h6 class="mb-0 mt-5">
+                    <i data-feather="save" class="me-2"></i>Application settings
+                </h6>
+                <hr/>
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="pcsetting3"/>
+                    <label class="form-check-label f-w-600 pl-1" for="pcsetting3"
+                    >Backup Storage</label
+                    >
+                </div>
+                <p class="text-muted mb-4 ms-5">
+                    Automaticaly take backup as par schedule
+                </p>
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="pcsetting4"/>
+                    <label class="form-check-label f-w-600 pl-1" for="pcsetting4"
+                    >Allow guest to print file</label
+                    >
+                </div>
+                <h6 class="mb-0 mt-5">
+                    <i data-feather="cpu" class="me-2"></i>System settings
+                </h6>
+                <hr/>
+                <div class="form-check form-switch">
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="pcsetting5"
+                        checked
+                    />
+                    <label class="form-check-label f-w-600 pl-1" for="pcsetting5"
+                    >View other user chat</label
+                    >
+                </div>
+                <p class="text-muted ms-5">Allow to show public user message</p>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-light-danger btn-sm"
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button type="button" class="btn btn-light-primary btn-sm">
+                    Save changes
+                </button>
             </div>
         </div>
-    </modal>
-  </div>
-
-  @yield('content')
-
-  <footer class="footer" id="footer">
-    @if (url()->current() != url('/home/demand/create') && url()->current() != url('/home/demand')&& url()->current() != url('/home/demand/list') && url()->current() != url('/home/store') && url()->current() != url('/home/store/list'))
-    <div class="footer__linkbox linkbox">
-        @if (url()->current() != url('/home/dashboard'))
-            <a
-            @if (Auth::check())
-              @if (url()->current() == url('/home/setting/financial_report'))
-                  href="{{ url('/home/setting') }}"
-              @else
-                  href="{{ url('/home/dashboard') }}"
-              @endif
-            @else
-                href="javascript:;" v-on:click="showModal" @endif>{{url()->current() == url('/home/setting/financial_report') ? '続けて決算書をアップロードする' : 'ダッシュボードへ'}}</a>
-        @endif
     </div>
-    @endif
-    <div class="inFooter">
-      <p>Copyright &copy; 2021-2022 JSaaS. All Rights Reserved.</p>
+</div>
+<!-- [ Header ] end -->
+
+<!-- [ Main Content ] start -->
+<div class="dash-container">
+    <div class="dash-content">
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="page-header-title">
+                            <h4 class="m-b-10">@yield('page-title')</h4>
+                        </div>
+                        <ul class="breadcrumb">
+                            @yield('breadcrumb')
+                        </ul>
+                    </div>
+                    <div class="col">
+                        @yield('action-btn')
+                    </div>
+                </div>
+            </div>
+        </div>
+    @yield('content')
+        <div class="chat-box">
+            <div class="chat-box-header" onclick="showHide()">
+                <h3>Chat Bot</h3>
+                <span class="chat-box-arrow-up" id="chat-box-arrow"></span>
+            </div>
+            @php
+                $chat_logs = \App\Models\ChatGptLog::where('employee_id', \Auth::id())->get()
+            @endphp
+            <div class="chat-box-mess" id="chat-box-mess">
+                @if($chat_logs)
+                    @foreach ($chat_logs as $chat_log)
+                        <div class="chat-box-mess-text-chat">{!! nl2br(e($chat_log->prompt)) !!}</div>
+                        <div class="chat-box-mess-text">{!! nl2br(e($chat_log->response)) !!}</div>
+                    @endforeach
+                @endif
+                {{-- <div class="chat-box-mess-loading" \>
+                    <div id="loading-bubble" class="chat-box-mess-text">
+                        <div class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                    </div>
+                </div> --}}
+
+
+            </div>
+
+            <div class="chat-box-btn-div">
+                <div class="chat-box-btn-div-bottom">
+                    <form role="form" id="ai_chat" action="{{url('/ai-ask')}}" method="post" enctype="multipart/form-data">
+                        {{csrf_field()}}
+                        <select name="role" id="ai_chat">
+                            <option value="0">User</option>
+                            <option value="1">System</option>
+                        </select>
+                        <input type="text" name="chatgpt" id="chatgpt" placeholder="Enter chat here">
+                        <button type="submit" class="reset-btn">Submit</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    <!-- [ Main Content ] end -->
     </div>
-  </footer>
+</div>
+<div class="modal fade" id="commonModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="body">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 99999">
+    <div id="liveToast" class="toast text-white fade" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body"> </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+@include('partials.admin.footer')
+@include('Chatify::layouts.footerLinks')
+    <script src="js-loading-overlay.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-loading-overlay@1.1.0/dist/js-loading-overlay.min.js"></script>
+    <script>
+        var url_chat = "{{url('/ai-ask')}}";
+        $("form#ai_chat").submit(function(){
+            event.preventDefault();
+            var formData = new FormData(this);
+            var messChatDiv = $('.chat-box-mess');
+            var chat  = $('<div class="chat-box-mess-text-chat">' +formData.get('chatgpt').replace(/\n/g,'<br />') + '</div>');
+            messChatDiv.append(chat);
+            var loading = $('<div class="chat-box-mess-loading"><div id="loading-bubble"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>')
+            messChatDiv.delay(800).queue(function (next) {
+                $(this).append(loading);
+                next();
+                messChatDiv.scrollTop(messChatDiv[0].scrollHeight);
+            });
+            messChatDiv.scrollTop(messChatDiv[0].scrollHeight);
 
-  <div id="overlay" class="overlay"></div>
+            $.ajax({
+                url: url_chat,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    $('.chat-box-mess-loading').remove();
 
-  <script src="{{ asset('js/app.js') }}"></script>
+                    if(response.type == 'dark_mode'){
+                        window.location.reload();
+                    }
+                    else if(response.type == 'go_page'){
+                        window.location.href = response.url;
+                    }
 
-  <script>
-    /**
-     *  初回アクセスのみアコーディオンを実行するようにセッションで制御
-     */
-    let $sidebar = $('.sidebar');
-    if ($sidebar) {
-      let el_once_done = window.sessionStorage.getItem('el_once_done');
+                    var content  = $('<div class="chat-box-mess-text">' +response.content.replace(/\n/g,'<br />') + '</div>');
+                    var messDiv = $('.chat-box-mess')
+                    messDiv.append(content);
+                    messDiv.scrollTop(messDiv[0].scrollHeight);
+                    $('#chat-box-arrow').removeClass('chat-box-arrow-up')
+                    $('#chat-box-arrow').addClass('chat-box-arrow-down')
+                    $('#btn_copy').css('background-color', '#2662b6');
+                },
+                error: function(xhr, status, error) {
+                    return false;
+                }
+            });
+            document.getElementById('ai_chat').reset();;
+            return false;
+        });
+    </script>
+    <script>
+        function showHide(){
+            var messChatDiv = $('.chat-box-mess');
+            messChatDiv.scrollTop(messChatDiv[0].scrollHeight);
+            if($('.chat-box').hasClass('show_chatbox')){
+                $('.chat-box').removeClass('show_chatbox');
+                $('.chat-box').addClass('hide_chatbox');
+                $('#chat-box-arrow').removeClass('chat-box-arrow-down')
+                $('#chat-box-arrow').addClass('chat-box-arrow-up')
 
-      if (el_once_done) {
-        $sidebar.removeClass('el_once');
-      } else {
-        $sidebar.addClass('el_once');
-      }
-    }
-
-
-    setTimeout(function() {
-      if ($(".sidebar").hasClass("el_once")) {
-        $(".js_accordion .js_accordion_inner").slideUp();
-        $(".js_accordion .js_accordion_header").removeClass("el_open");
-      }
-      // 1秒（1000ms）後に処理
-      window.sessionStorage.setItem('el_once_done', true);
-    }, 1000);
-    $(function() {
-
-
-      //.js_accordionの中の.js_accordion_headerがクリックされたら
-      $(".js_accordion .js_accordion_header").click(function() {
-        //クリックされた.js_accordionの中の.js_accordion_headerに隣接する.js_accordion_innerが開いたり閉じたりする。
-        $(this).next(".js_accordion_inner").slideToggle();
-        $(this).toggleClass("el_open");
-        //クリックされた.js_accordionの中の.js_accordion_header以外の.js_accordionの中の.js_accordion_headerに隣接する.js_accordionの中の.js_accordion_innerを閉じる
-        $(".js_accordion .js_accordion_header").not($(this)).next(
-          ".js_accordion .js_accordion_inner").slideUp();
-        $(".js_accordion .js_accordion_header").not($(this)).removeClass("el_open");
-        $(".js_accordion .js_accordion_header.stay").not($(this)).toggleClass("el_open");
-      });
-    });
-  </script>
- <script src="https://cdn.jsdelivr.net/npm/vue-js-modal@1.3.28/dist/index.min.js"></script>
-
-  <script>
-    Vue.use(window["vue-js-modal"].default);
-    new Vue({
-      el: '#sidebar',
-      data: {
-        obj: [],
-
-      },
-      mounted: function() {
-
-      },
-      methods: {
-        showModal: function() {
-          var self = this;
-
-          this.$modal.show('modal-area');
-        },
-        hide: function() {
-          this.$modal.hide('modal-area');
-        },
-
-        showModalBatonz: function() {
-          var self = this;
-          this.$modal.show('modal-batonz-area');
-        },
-        hideModalBatonz: function() {
-          this.$modal.hide('modal-batonz-area');
-        },
-
-      }
-    })
-    var footer = new Vue({
-      el: '#footer',
-      data: {
-        obj: [],
-
-      },
-      mounted: function() {
-
-      },
-      methods: {
-        showModal: function() {
-          var self = this;
-
-          this.$modal.show('modal-area');
-        },
-        hide: function() {
-          this.$modal.hide('modal-area');
-        },
-
-      }
-    });
-  </script>
-  <script>
-    var a = document.getElementsByClassName('child');
-    console.log(a[10].firstElementChild.href);
-    for(var i = 0; i < a.length; i++){
-      if(a[i].firstElementChild.href == window.location.href){
-          a[i].firstElementChild.style.backgroundColor = '#7d8185';
-          a[i].firstElementChild.style.color = '#fff';
-      }
-    }
-  </script>
-
-
-
-  @if (isset($page_data->base_color))
-    <style>
-      .header .inHeader {
-        background: {{ $page_data->base_color }} !important;
-      }
-
-      .submit_box2 input {
-        background: {{ $page_data->base_color }} !important;
-      }
-
-      .sidebar .inSidebar__menu ul li a i.active {
-        color: {{ $page_data->base_color }} !important;
-      }
-
-      .subHeader ul li a.active {
-        border-bottom: 3px solid {{ $page_data->base_color }} !important;
-        color: {{ $page_data->base_color }} !important;
-        pointer-events: none;
-      }
-
-      a:hover {
-        /* background: {{ $page_data->base_color }}!important; */
-      }
-
-      .sec1__blocks--block_head p a {
-        color: {{ $page_data->base_color }} !important;
-        border: 1px solid {{ $page_data->base_color }} !important;
-      }
-    </style>
-  @endif
-
-
-  @yield('script')
-
+            }else{
+                $('.chat-box').addClass('show_chatbox');
+                $('.chat-box').removeClass('hide_chatbox');
+                $('#chat-box-arrow').removeClass('chat-box-arrow-up')
+                $('#chat-box-arrow').addClass('chat-box-arrow-down')
+            }
+        }
+    </script>
 </body>
-
 </html>
