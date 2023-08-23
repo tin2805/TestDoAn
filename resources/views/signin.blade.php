@@ -1,5 +1,5 @@
 @extends('layouts.base_signin')
-{{-- @php
+@php
     use App\Models\Utility;
       //  $logo=asset(Storage::url('uploads/logo/'));
            $logo=\App\Models\Utility::get_file('uploads/logo');
@@ -7,7 +7,7 @@
         $company_logo=Utility::getValByName('company_logo');
         $settings = Utility::settings();
 
-@endphp --}}
+@endphp
 @push('custom-scripts')
     @if(env('RECAPTCHA_MODULE') == 'on')
         {!! NoCaptcha::renderJs() !!}
@@ -62,22 +62,17 @@
             </div>
         @endif
         <div class="form-group mb-4">
-
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="text-xs">{{ __('Forgot Your Password?') }}</a>
-                @endif
-
+            <a href="{{ route('forgotPassView') }}" class="text-xs">{{ __('Forgot Your Password?') }}</a>
         </div>
         <div class="d-grid">
             <button type="submit" class="btn-login btn btn-primary btn-block mt-2" id="login_button">{{__('Login')}}</button>
         </div>
-        {{-- @if($settings['enable_signup'] == 'on')
+        @if($settings['enable_signup'] == 'on')
 
         <p class="my-4 text-center">{{__("Don't have an account?")}} <a href="{{ route('register',!empty(\Auth::user()->lang)?\Auth::user()->lang:'en') }}" class="text-primary">{{__('Register')}}</a></p>
-        @endif --}}
+        @endif
 
     </div>
-    {{-- {{Form::close()}} --}}
 	</form>
 @endsection
 

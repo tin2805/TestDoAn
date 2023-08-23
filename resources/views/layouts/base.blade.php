@@ -210,8 +210,8 @@
             <div class="chat-box-mess" id="chat-box-mess">
                 @if($chat_logs)
                     @foreach ($chat_logs as $chat_log)
-                        <div class="chat-box-mess-text-chat">{{$chat_log->prompt}}</div>
-                        <div class="chat-box-mess-text">{{$chat_log->response}}</div>
+                        <div class="chat-box-mess-text-chat">{!! nl2br(e($chat_log->prompt)) !!}</div>
+                        <div class="chat-box-mess-text">{!! nl2br(e($chat_log->response)) !!}</div>
                     @endforeach
                 @endif
                 {{-- <div class="chat-box-mess-loading" \>
@@ -298,6 +298,9 @@
 
                     if(response.type == 'dark_mode'){
                         window.location.reload();
+                    }
+                    else if(response.type == 'go_page'){
+                        window.location.href = response.url;
                     }
 
                     var content  = $('<div class="chat-box-mess-text">' +response.content.replace(/\n/g,'<br />') + '</div>');
