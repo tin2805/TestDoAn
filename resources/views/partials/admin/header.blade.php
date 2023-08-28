@@ -40,7 +40,7 @@
                         <span class="theme-avtar">
                              <img src="{{ !empty(\Auth::user()->avatar) ? $profile . \Auth::user()->avatar :  $profile.'avatar.png'}}" class="img-fluid rounded-circle">
                         </span>
-                        <span class="hide-mob ms-2">{{__('Hi, ')}}{{\Auth::user()->name }}!</span>
+                        <span class="hide-mob ms-2">{{__('Hi, ')}}{{\Auth::user()->fullname }}!</span>
                         <i class="ti ti-chevron-down drp-arrow nocolor hide-mob"></i>
                     </a>
                     <div class="dropdown-menu dash-h-dropdown">
@@ -75,9 +75,9 @@
                         <a class="dash-head-link arrow-none me-0" href="{{ url('chats') }}" aria-haspopup="false"
                            aria-expanded="false">
                             <i class="ti ti-brand-hipchat"></i>
-                            {{-- <span class="bg-danger dash-h-badge message-toggle-msg  message-counter custom_messanger_counter beep"> {{ $unseenCounter }}<span
+                            <span class="bg-danger dash-h-badge message-toggle-msg  message-counter custom_messanger_counter beep"> {{ $unseenCounter }}<span
                                     class="sr-only"></span>
-                            </span> --}}
+                            </span>
                         </a>
                     </li>
                 @endif
