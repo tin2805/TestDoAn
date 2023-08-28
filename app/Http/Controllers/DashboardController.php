@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\CheckInOut;
 use App\Models\Employee;
+use App\Models\Announcement;
 
 class DashboardController extends Controller
 {
@@ -24,7 +25,8 @@ class DashboardController extends Controller
 
     public function index() {
         $checkin = CheckInOut::where('employee_id', Auth::id())->whereBetween('created_at', [date("Y-m-d H:i:s", strtotime("midnight", time())), date("Y-m-d H:i:s", strtotime("tomorrow", time()) - 1)])->first();
-        return view('dashboard.dashboard')->with(compact('checkin'));
+        $announcements = Announcement::where('status', 1)->get();
+        return view('dashboard.dashboard')->with(compact('checkin', 'announcements'));
     }
 
     public function logout() {

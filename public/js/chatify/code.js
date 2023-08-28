@@ -271,11 +271,11 @@ let app_modal = function ({
 *-------------------------------------------------------------
 */
 function scrollToBottom(container) {
- $(container)
-   .stop()
-   .animate({
-     scrollTop: $(container)[0].scrollHeight,
-   });
+  if ($(container)[0] != "" && $(container)[0] && null && $(container)[0] != "undefined") {
+    $(container).stop().animate({
+        scrollTop: $(container)[0].scrollHeight
+    });
+}
 }
 
 /**
@@ -542,6 +542,7 @@ function fetchMessages(id, newFetch = false) {
    noMoreMessages = false;
  }
  if (messenger != 0 && !noMoreMessages && !messagesLoading) {
+    console.log(messagesContainer);
    const messagesElement = messagesContainer.find(".messages");
    setMessagesLoading(true);
    $.ajax({
@@ -1635,7 +1636,7 @@ var resizeTimeout;
 window.visualViewport.addEventListener("resize", (e) => {
  clearTimeout(resizeTimeout);
  resizeTimeout = setTimeout(function () {
-   const h = e.target.height;
+   const h = e.target.height - 100;
    if (h) {
      $(".messenger-messagingView").css({ height: h + "px" });
    }

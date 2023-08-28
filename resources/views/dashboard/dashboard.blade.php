@@ -1,4 +1,7 @@
 @extends('layouts.base')
+@section('head')
+    <title>Dashboard</title>
+@endsection
 @section('page-title')
     {{__('Dashboard')}}
 @endsection
@@ -155,12 +158,12 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {{-- @forelse($announcements as $announcement)
+                                        @forelse($announcements as $announcement)
                                             <tr>
                                                 <td>{{ $announcement->title }}</td>
                                                 <td>{{ \Auth::user()->dateFormat($announcement->start_date)  }}</td>
                                                 <td>{{ \Auth::user()->dateFormat($announcement->end_date) }}</td>
-                                                <td>{{ $announcement->description }}</td>
+                                                <td>{{ $announcement->desc }}</td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -170,43 +173,10 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @endforelse --}}
+                                        @endforelse
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card list_card">
-                            <div class="card-header">
-                                <h4>{{__('Meeting List')}}</h4>
-                            </div>
-                            <div class="card-body dash-card-body">
-                                {{-- @if(count($meetings) > 0)
-                                    <div class="table-responsive">
-                                        <table class="table align-items-center">
-                                            <thead>
-                                            <tr>
-                                                <th>{{__('Meeting title')}}</th>
-                                                <th>{{__('Meeting Date')}}</th>
-                                                <th>{{__('Meeting Time')}}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @forelse($meetings as $meeting)
-                                                <tr>
-                                                    <td>{{ $meeting->title }}</td>
-                                                    <td>{{ \Auth::user()->dateFormat($meeting->date) }}</td>
-                                                    <td>{{ \Auth::user()->timeFormat($meeting->time) }}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                @else
-                                    <div class="p-2">
-                                        {{__('No meeting scheduled yet.')}}
-                                    </div>
-                                @endif --}}
                             </div>
                         </div>
                     </div>

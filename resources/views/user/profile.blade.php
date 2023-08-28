@@ -2,6 +2,9 @@
 @php
     $profile=\App\Models\Utility::get_file('uploads/avatar/');
 @endphp
+@section('head')
+<title>Profile</title>
+@endsection
 @section('page-title')
     {{__('Profile Account')}}
 @endsection

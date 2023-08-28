@@ -1,4 +1,7 @@
 @extends('layouts.base')
+@section('head')
+<title>Attendance</title>
+@endsection
 @section('page-title')
     {{__('Manage Attendance List')}}
 @endsection

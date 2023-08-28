@@ -20,7 +20,7 @@
 
 <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
 <head>
-    <title></title>
+    @yield('head')
     <script src="{{ asset('js/html5shiv.js') }}"></script>
 {{--    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>--}}
 {{--    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>--}}
@@ -67,7 +67,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/customizer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" id="main-style-link">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
     @stack('css-page')
 </head>
 <body class="red">
@@ -198,11 +197,10 @@
                 </div>
             </div>
         </div>
-    @yield('content')
+        @yield('content')
         <div class="chat-box">
             <div class="chat-box-header" onclick="showHide()">
                 <h3>Chat Bot</h3>
-                <span class="chat-box-arrow-up" id="chat-box-arrow"></span>
             </div>
             @php
                 $chat_logs = \App\Models\ChatGptLog::where('employee_id', \Auth::id())->get()
@@ -269,8 +267,6 @@
 </div>
 @include('partials.admin.footer')
 @include('Chatify::layouts.footerLinks')
-    <script src="js-loading-overlay.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-loading-overlay@1.1.0/dist/js-loading-overlay.min.js"></script>
     <script>
         var url_chat = "{{url('/ai-ask')}}";
         $("form#ai_chat").submit(function(){
@@ -307,8 +303,6 @@
                     var messDiv = $('.chat-box-mess')
                     messDiv.append(content);
                     messDiv.scrollTop(messDiv[0].scrollHeight);
-                    $('#chat-box-arrow').removeClass('chat-box-arrow-up')
-                    $('#chat-box-arrow').addClass('chat-box-arrow-down')
                     $('#btn_copy').css('background-color', '#2662b6');
                 },
                 error: function(xhr, status, error) {
@@ -326,16 +320,14 @@
             if($('.chat-box').hasClass('show_chatbox')){
                 $('.chat-box').removeClass('show_chatbox');
                 $('.chat-box').addClass('hide_chatbox');
-                $('#chat-box-arrow').removeClass('chat-box-arrow-down')
-                $('#chat-box-arrow').addClass('chat-box-arrow-up')
-
             }else{
                 $('.chat-box').addClass('show_chatbox');
                 $('.chat-box').removeClass('hide_chatbox');
-                $('#chat-box-arrow').removeClass('chat-box-arrow-up')
-                $('#chat-box-arrow').addClass('chat-box-arrow-down')
             }
         }
     </script>
+    <script src="{{ asset('js/chatify/utils.js') }}"></script>
+    <script src="{{ asset('js/chatify/code.js') }}"></script>
+
 </body>
 </html>

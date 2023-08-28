@@ -1,4 +1,5 @@
 @extends('layouts.base')
+<title>Support</title>
 @push('script-page')
 @endpush
 @section('page-title')
