@@ -1,4 +1,7 @@
 @extends('layouts.base_signin')
+@section('head')
+<title>Code Verify</title>
+@endsection
 @section('page-title')
     {{__('Forgot Password')}}
 @endsection

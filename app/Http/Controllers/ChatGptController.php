@@ -54,18 +54,21 @@ class ChatGptController extends Controller
                     }
                 }
             }
-            elseif(str_contains($search, 'company')){
-                $company_storages = CompanyStorage::where('status', 1)->get();
-                foreach($company_storages as $store) {
-                    if(str_contains($search, $store->key)){
-                        $data['choices'][0]['message']['content'] = $store->value;
-                        ChatGptLog::create([
-                            'employee_id' => Auth::id() ?? 0,
-                            'prompt' => $search,
-                            'response' => $data['choices'][0]['message']['content']
-                        ]);
-                        return response()->json($data['choices'][0]['message'], 200, array(), JSON_PRETTY_PRINT);
-                    }
+        }
+        //user
+        if(str_contains($search, 'company') || str_contains($search, 'công ty')){
+            $company_storages = CompanyStorage::where('status', 1)->get();
+            foreach($company_storages as $store) {
+                $keys = explode(',', $store->key);
+                if(0 < count(array_intersect(array_map('strtolower', explode(' ', $search)), $keys))){
+                    $data['choices'][0]['message']['content'] = $store->value;
+                    ChatGptLog::create([
+                        'employee_id' => Auth::id() ?? 0,
+                        'prompt' => $search,
+                        'type' => 'corp_storage',
+                        'response' => $data['choices'][0]['message']['content']
+                    ]);
+                    //return response()->json($data['choices'][0]['message'], 200, array(), JSON_PRETTY_PRINT);
                 }
             }
         }
@@ -100,11 +103,11 @@ class ChatGptController extends Controller
         $previousChatLogs = ChatGptLog::where('employee_id', $employee_id)->orderBy('id', 'desc')->take(6)->get();
         $previousConversation = '';
         foreach($previousChatLogs as $log){
-            $previousConversation .= "\nUser: " . $log->prompt . "\nChatGPT: " . $log->response;
+            $previousConversation .= "\nUser: " . $log->prompt . "\nAnswer: " . $log->response;
         }
         $currentQuestion = $search;
         $fullPrompt = 'regarding the previous question and answer:'.'\n' . $previousConversation . "\nCurrent question: " . $currentQuestion;
-        dd($fullPrompt);
+        // dd($fullPrompt);
         return Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer '.env('OPENAI_API_KEY'),

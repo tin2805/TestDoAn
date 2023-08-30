@@ -203,7 +203,7 @@
                 <h3>Chat Bot</h3>
             </div>
             @php
-                $chat_logs = \App\Models\ChatGptLog::where('employee_id', \Auth::id())->get()
+                $chat_logs = \App\Models\ChatGptLog::where('employee_id', \Auth::id())->where('type', 1)->get()
             @endphp
             <div class="chat-box-mess" id="chat-box-mess">
                 @if($chat_logs)
@@ -290,20 +290,22 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    $('.chat-box-mess-loading').remove();
-
-                    if(response.type == 'dark_mode'){
+                    messChatDiv.delay(800).queue(function (next) {
+                        $('.chat-box-mess-loading').remove();
+                        if(response.type == 'dark_mode'){
                         window.location.reload();
-                    }
-                    else if(response.type == 'go_page'){
-                        window.location.href = response.url;
-                    }
+                        }
+                        else if(response.type == 'go_page'){
+                            window.location.href = response.url;
+                        }
 
-                    var content  = $('<div class="chat-box-mess-text">' +response.content.replace(/\n/g,'<br />') + '</div>');
-                    var messDiv = $('.chat-box-mess')
-                    messDiv.append(content);
-                    messDiv.scrollTop(messDiv[0].scrollHeight);
-                    $('#btn_copy').css('background-color', '#2662b6');
+                        var content  = $('<div class="chat-box-mess-text">' +response.content.replace(/\n/g,'<br />') + '</div>');
+                        var messDiv = $('.chat-box-mess')
+                        messDiv.append(content);
+                        messDiv.scrollTop(messDiv[0].scrollHeight);
+                        $('#btn_copy').css('background-color', '#2662b6');
+                        });
+                    
                 },
                 error: function(xhr, status, error) {
                     return false;

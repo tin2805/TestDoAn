@@ -1,5 +1,7 @@
 @extends('layouts.base_signin')
-
+@section('head')
+<title>Forgot Password</title>
+@endsection
 @section('page-title')
     {{ __('Reset Password') }}
 @endsection

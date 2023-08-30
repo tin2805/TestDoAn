@@ -1,4 +1,7 @@
 @extends('layouts.base_signin')
+@section('head')
+<title>Reset Password</title>
+@endsection
 @php
   //  $logo=asset(Storage::url('uploads/logo/'));
     $logo=\App\Models\Utility::get_file('uploads/logo');

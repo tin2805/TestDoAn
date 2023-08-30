@@ -1,4 +1,7 @@
 @extends('layouts.base_signin')
+@section('head')
+<title>Sign In</title>
+@endsection
 @php
     use App\Models\Utility;
       //  $logo=asset(Storage::url('uploads/logo/'));

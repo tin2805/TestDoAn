@@ -1,4 +1,7 @@
 @extends('layouts.base_signin')
+@section('head')
+<title>Sign Up</title>
+@endsection
 @section('page-title')
     {{__('Register')}}
 @endsection
