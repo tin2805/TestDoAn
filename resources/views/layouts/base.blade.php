@@ -276,11 +276,7 @@
             var chat  = $('<div class="chat-box-mess-text-chat">' +formData.get('chatgpt').replace(/\n/g,'<br />') + '</div>');
             messChatDiv.append(chat);
             var loading = $('<div class="chat-box-mess-loading"><div id="loading-bubble"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>')
-            messChatDiv.delay(800).queue(function (next) {
-                $(this).append(loading);
-                next();
-                messChatDiv.scrollTop(messChatDiv[0].scrollHeight);
-            });
+            messChatDiv.append(loading);
             messChatDiv.scrollTop(messChatDiv[0].scrollHeight);
 
             $.ajax({
@@ -290,21 +286,19 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    messChatDiv.delay(800).queue(function (next) {
-                        $('.chat-box-mess-loading').remove();
-                        if(response.type == 'dark_mode'){
-                        window.location.reload();
-                        }
-                        else if(response.type == 'go_page'){
-                            window.location.href = response.url;
-                        }
+                    $('.chat-box-mess-loading').remove();
+                    if(response.type == 'dark_mode'){
+                    window.location.reload();
+                    }
+                    else if(response.type == 'go_page'){
+                        window.location.href = response.url;
+                    }
 
-                        var content  = $('<div class="chat-box-mess-text">' +response.content.replace(/\n/g,'<br />') + '</div>');
-                        var messDiv = $('.chat-box-mess')
-                        messDiv.append(content);
-                        messDiv.scrollTop(messDiv[0].scrollHeight);
-                        $('#btn_copy').css('background-color', '#2662b6');
-                        });
+                    var content  = $('<div class="chat-box-mess-text">' +response.content.replace(/\n/g,'<br />') + '</div>');
+                    var messDiv = $('.chat-box-mess')
+                    messDiv.append(content);
+                    messDiv.scrollTop(messDiv[0].scrollHeight);
+                    $('#btn_copy').css('background-color', '#2662b6');
                     
                 },
                 error: function(xhr, status, error) {

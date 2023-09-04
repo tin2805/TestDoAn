@@ -39,8 +39,8 @@
     @csrf
     <div class="">
         <div class="form-group mb-3">
-            <label for="email" class="form-label">{{__('Email')}}</label>
-            <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            <label for="email" class="form-label">{{__('Email Or UserName')}}</label>
+            <input class="form-control @error('email') is-invalid @enderror" id="email" type="text" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
             @error('email')
             <div class="invalid-feedback" role="alert">{{ $message }}</div>
             @enderror

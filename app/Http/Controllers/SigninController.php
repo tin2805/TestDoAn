@@ -24,7 +24,7 @@ class SigninController extends Controller
     }
     public function login(Request $request) {
         $post_data = $request->all();
-        $customer = Employee::where('email', $post_data['email'])->first();
+        $customer = Employee::where('email', $post_data['email'])->orWhere('user_name', $post_data['email'])->first();
         if (@$customer->id) {
             if (Hash::check($post_data['password'], $customer->password)) {
 

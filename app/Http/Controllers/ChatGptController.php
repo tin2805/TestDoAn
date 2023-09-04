@@ -65,7 +65,7 @@ class ChatGptController extends Controller
                     ChatGptLog::create([
                         'employee_id' => Auth::id() ?? 0,
                         'prompt' => $search,
-                        'type' => 'corp_storage',
+                        'type' => 0,
                         'response' => $data['choices'][0]['message']['content']
                     ]);
                     //return response()->json($data['choices'][0]['message'], 200, array(), JSON_PRETTY_PRINT);

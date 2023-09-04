@@ -1,7 +1,6 @@
 @php
     $users=\Auth::user();
     //$profile=asset(Storage::url('uploads/avatar/'));
-    $profile=\App\Models\Utility::get_file('uploads/avatar/');
     $languages=\App\Models\Utility::languages();
     $lang = isset($users->lang)?$users->lang:'en';
     $setting = \App\Models\Utility::colorset();
@@ -38,7 +37,7 @@
                         aria-expanded="false"
                     >
                         <span class="theme-avtar">
-                             <img src="{{ !empty(\Auth::user()->avatar) ? $profile . \Auth::user()->avatar :  $profile.'avatar.png'}}" class="img-fluid rounded-circle">
+                             <img src="{{ asset('storage/'.\Auth::user()->avatar)}}" class="img-fluid rounded-circle">
                         </span>
                         <span class="hide-mob ms-2">{{__('Hi, ')}}{{\Auth::user()->fullname }}!</span>
                         <i class="ti ti-chevron-down drp-arrow nocolor hide-mob"></i>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use Auth;
 use Hash;
+use Illuminate\Support\Str;
 
 class EmployeeController extends Controller
 {
@@ -17,7 +18,15 @@ class EmployeeController extends Controller
 
     public function updateAccount(Request $request) {
         $employee = Employee::find(Auth::id());
-        $post_data = $request->only('fullname', 'email', 'avatar');
+        $post_data = $request->only('fullname', 'email');
+        if($request->profile) {
+            $file= $request->file('profile');
+            $filename= date('YmdHi').Str::random(8). '.'.$file->getClientOriginalExtension();
+            \Storage::disk('public')->putFileAs('/avatar/'.date('FY') ,$file,  $filename );
+            $filePath ='avatar/'. date('FY').'/'. $filename;
+            $post_data['avatar'] =  $filePath;
+        }
+
         $employee->update($post_data);
         return redirect()->back()->with('success', __('Update account successfully.'));
     }

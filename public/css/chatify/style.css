@@ -922,7 +922,7 @@ div.loadingPlaceholder-date {
 .imageModal {
   display: none;
   position: fixed;
-  z-index: 50;
+  z-index: 9999;
   padding-top: 100px;
   left: 0;
   top: 0;

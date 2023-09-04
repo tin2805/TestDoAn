@@ -35,8 +35,8 @@ class SignupController extends Controller
     public function validation($data) {
         $rules = [
             'fullname' => ['required', 'string', 'max:200'],
-            'user_name' => ['required', 'string', 'max:200'],
-            'email' => ['required', 'string', 'max:200'],
+            'user_name' => ['required', 'string', 'max:200', 'unique:employees'],
+            'email' => ['required', 'string', 'max:200', 'unique:employees'],
             'phone' => ['required', 'string', 'max:200'],
             'password' => ['required', 'string', 'min:8', 'max:20'],
             'confirm_password' => ['required'],
