@@ -75,7 +75,7 @@ class ChatGptController extends Controller
 
         $employee_id = Auth::id();
         $data = $this->makeCallApiChatGpt($search, $employee_id);
-        // $data['choices'][0]['message'] = ['content' => 'caxxxxxxxxx',
+        // $data['choices'][0]['message'] = ['content' => 'aaaa',
         //                                     'role' => 'assistant'];
         $args = [
             'customer_id' => $employee_id ?? 0,
@@ -93,9 +93,17 @@ class ChatGptController extends Controller
 
         $data['choices'][0]['message']['root'] = $sentence;
 
-
+        $respone = $data['choices'][0]['message'];
+        // $respone['content'] = 'ChatGpt: Bạn được phép đi muộn tối đa 15 phút mỗi ngày làm việc.';
+        $answer = explode('Answer:', $respone['content']);
+        if(count($answer) > 1) {
+            $respone['content'] = $answer[1];
+        }
+        else {
+            $respone['content'] = $answer[0];
+        }
         
-        return response()->json($data['choices'][0]['message'], 200, array(), JSON_PRETTY_PRINT);
+        return response()->json($respone, 200, array(), JSON_PRETTY_PRINT);
 
     }
     
