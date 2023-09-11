@@ -234,7 +234,7 @@
                             <option value="1">System</option>
                         </select>
                         <input type="text" name="chatgpt" id="chatgpt" placeholder="Enter chat here">
-                        <button type="submit" class="reset-btn">Submit</button>
+                        <button type="submit" class="reset-btn"><i class="fas fa-paper-plane"></i></button>
                     </form>
                 </div>
 
