@@ -1,7 +1,6 @@
 @php
     use App\Models\Utility;
-      //  $logo=asset(Storage::url('uploads/logo/'));
-        $logo=\App\Models\Utility::get_file('uploads/logo/');
+        $logo=asset(Storage::url('uploads/logo/'.setting('site.logo_page')));
         $company_logo=Utility::getValByName('company_logo_dark');
         $company_logos=Utility::getValByName('company_logo_light');
         $company_small_logo=Utility::getValByName('company_small_logo');
@@ -21,15 +20,7 @@
     <div class="navbar-wrapper">
         <div class="m-header main-logo">
             <a href="#" class="b-brand">
-{{--                <img src="{{ asset(Storage::url('uploads/logo/'.$logo)) }}" alt="{{ env('APP_NAME') }}" class="logo logo-lg" />--}}
-
-                @if($mode_setting['cust_darklayout'] && $mode_setting['cust_darklayout'] == 'on' )
-                    <img src="{{ $logo . '/' . (isset($company_logos) && !empty($company_logos) ? $company_logos : 'logo-dark.png') }}"
-                         alt="{{ config('app.name', 'ERPGo-SaaS') }}" class="logo logo-lg">
-                @else
-                    <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') }}"
-                         alt="{{ config('app.name', 'ERPGo-SaaS') }}" class="logo logo-lg">
-                @endif
+               <img src="{{ $logo }}" alt="{{ env('APP_NAME') }}" class="logo logo-lg" />
 
             </a>
         </div>
