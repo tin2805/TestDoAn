@@ -229,7 +229,7 @@
                 <div class="chat-box-btn-div-bottom">
                     <form role="form" id="ai_chat" action="{{url('/ai-ask')}}" method="post" enctype="multipart/form-data">
                         {{csrf_field()}}
-                        <select name="role" id="ai_chat">
+                        <select name="role" id="role">
                             <option value="0">User</option>
                             <option value="1">System</option>
                         </select>
