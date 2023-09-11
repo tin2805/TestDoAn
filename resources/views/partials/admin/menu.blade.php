@@ -1,6 +1,6 @@
 @php
     use App\Models\Utility;
-        $logo=asset(Storage::url('uploads/logo/'.setting('site.logo_page')));
+        $logo=asset(Storage::url(setting('site.logo')));
         $company_logo=Utility::getValByName('company_logo_dark');
         $company_logos=Utility::getValByName('company_logo_light');
         $company_small_logo=Utility::getValByName('company_small_logo');
