@@ -49,7 +49,7 @@ class DashboardController extends Controller
         if($checkin){
             return redirect()->back()->with('error_message', 'You have been checkin to day');
         }
-        if(in_array($client_ip, $ip_company)){
+        // if(in_array($client_ip, $ip_company)){
             $args = [
                 'employee_id' => Auth::user()->id,
                 'start_time' => now(),
@@ -67,10 +67,10 @@ class DashboardController extends Controller
     
             CheckInOut::create($args);
             return redirect()->back()->with('success_message', 'Success checkin to day');
-        }
-        else{
-            return redirect()->back()->with('error_message', 'Wrong Ip Company');
-        }
+        // }
+        // else{
+        //     return redirect()->back()->with('error_message', 'Wrong Ip Company');
+        // }
 
     }
 
@@ -78,7 +78,7 @@ class DashboardController extends Controller
         $ip_company = setting('site.ip_company');
         $ip_company = explode(',',$ip_company);
         $client_ip = request()->ip();
-        if(in_array($client_ip, $ip_company)){
+        // if(in_array($client_ip, $ip_company)){
             $checkin = CheckInOut::where('employee_id', Auth::id())->whereBetween('created_at', [date("Y-m-d H:i:s", strtotime("midnight", time())), date("Y-m-d H:i:s", strtotime("tomorrow", time()) - 1)])->first();
             $args = [
                 'end_time' => now(),
@@ -91,10 +91,10 @@ class DashboardController extends Controller
 
             $checkin->update($args);
             return redirect()->back()->with('success_message', 'Success checkout to day');
-        }
-        else{
-            return redirect()->back()->with('error_message', 'Wrong Ip Company');
-        }
+        // }
+        // else{
+        //     return redirect()->back()->with('error_message', 'Wrong Ip Company');
+        // }
     }
 
     public function changeMode() {
